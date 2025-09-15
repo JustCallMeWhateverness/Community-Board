@@ -3,15 +3,16 @@ $darker-card-color: rgba(143, 191, 219, 0.267);
 
 .card {
   background-color: $ligher-card-color;
-  margin: 35px 0;
+  margin: 35px;
   backdrop-filter: blur(40px);
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.438);
 }
 
 [class^="col"]:nth-of-type(even):has(.card) {
   .card:hover {
     background-color: $darker-card-color;
     transform: rotate(360deg) scale(0.82);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(8, 0, 0, 0.3);
   }
 }
 
@@ -25,16 +26,30 @@ $darker-card-color: rgba(143, 191, 219, 0.267);
 
 //Add different rotation for every second card, the col that has .card
 
-[class^="col"]:nth-of-type(even):has(.card) {
+[class^="col"]:nth-of-type(4n+2):has(.card) {
   .card {
-    transform: perspective(1000px) rotate3d(20, 1, 20, 20deg);
+    transform: perspective(1000px) rotate3d(10, 1, 10, -10deg);
     backdrop-filter: blur(40px);
   }
 }
 
-[class^="col"]:nth-of-type(odd):has(.card) {
+[class^="col"]:nth-of-type(4n+4):has(.card) {
   .card {
-    transform: perspective(1000px) rotate3d(20, 1, 20, -20deg);
+    transform: perspective(1000px) rotate3d(10, 1, 10, 10deg);
+    backdrop-filter: blur(40px);
+  }
+}
+
+[class^="col"]:nth-of-type(4n+3):has(.card) {
+  .card {
+    transform: perspective(1000px) rotate3d(10, 1, 10, -10deg);
+    backdrop-filter: blur(40px);
+  }
+}
+
+[class^="col"]:nth-of-type(4n+1):has(.card) {
+  .card {
+    transform: perspective(1000px) rotate3d(10, 1, 10, 10deg);
     backdrop-filter: blur(40px);
   }
 }

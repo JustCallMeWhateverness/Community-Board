@@ -6,8 +6,8 @@ export default function Main() {
   // a state to use with outlet context
   const stateAndSetter = useStateObject({
     categoryChoice: 'All',
-    sortChoice: 'Price (low to high)',
-    bwImages: false
+    sortChoice: 'Date (newest first)',
+    bwImages: false,
   });
 
   return <main className="mt-5">

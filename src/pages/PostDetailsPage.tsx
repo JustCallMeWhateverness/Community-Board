@@ -1,35 +1,35 @@
-import type Product from '../interfaces/Product';
+import type Post from '../interfaces/Post';
 import { Row, Col } from 'react-bootstrap';
 import { Link, useLoaderData } from 'react-router-dom';
 import NotFoundPage from './NotFoundPage';
 import Image from '../parts/Image';
-import productsLoader from '../utils/productsLoader';
+import postsLoader from '../utils/postsLoader';
 
-ProductDetailsPage.route = {
-  path: '/products/:slug',
+PostDetailsPage.route = {
+  path: '/posts/:slug',
   parent: '/',
-  loader: productsLoader
+  loader: postsLoader
 };
 
-export default function ProductDetailsPage() {
+export default function PostDetailsPage() {
 
-  const product =
-    useLoaderData().products[0] as Product;
+  const post =
+    useLoaderData().posts[0] as Post;
 
-  // if no product found, show 404
-  if (!product) {
+  // if no post found, show 404
+  if (!post) {
     return <NotFoundPage />;
   }
 
-  const { id, name, quantity, price$, description } = product;
+  const { id, title, date, description } = post;
 
-  return <article className="product-details">
+  return <article className="post-details">
     <Row>
       <Col>
-        <h2 className="text-primary">{name}</h2>
+        <h2 className="text-primary">{title}</h2>
         <Image
-          src={'/images/products/' + id + '.jpg'}
-          alt={'Product image of the product ' + name + '.'}
+          src={'/images/posts/' + id + '.jpg'}
+          alt={'Post image of the post ' + name + '.'}
         />
         {description.split('\n').map((x, i) => <p key={i}>{x}</p>)}
       </Col>
@@ -38,19 +38,19 @@ export default function ProductDetailsPage() {
       <Col className="px-4 pb-4">
         <Row className="p-3 bg-primary-subtle rounded">
           <Col className="pe-4 pe-sm-5 border-end border-primary">
-            <strong>Quantity</strong>:
+            <strong>Description</strong>:
             <span
               className="d-block d-sm-inline float-sm-end"
             >
-              {quantity}
+              {description}
             </span>
           </Col>
           <Col className="ps-4 ps-sm-5 text-end text-sm-start">
-            <strong>Price</strong>:
+            <strong>Date:</strong>:
             <span
               className="d-block d-sm-inline float-sm-end"
             >
-              ${price$.toFixed(2)}
+              {new Date(date).toLocaleDateString()}
             </span>
           </Col>
         </Row>
@@ -59,7 +59,7 @@ export default function ProductDetailsPage() {
     <Row>
       <Col>
         <Link to="/" className="btn btn-primary float-end">
-          Back to the product list
+          Back to the post list
         </Link>
       </Col>
     </Row>

@@ -1,28 +1,34 @@
-import type { SortOption } from '../utils/productPageHelpers';
+
+
+
+
+
+import type { SortOption } from '../utils/postPageHelpers';
 import { useLoaderData } from 'react-router-dom';
 import { Row, Col, Form } from 'react-bootstrap';
 import { useStateContext } from '../utils/useStateObject';
 import Select from '../parts/Select';
-import ProductCard from '../parts/ProductCard';
-import productsLoader from '../utils/productsLoader';
-import { getHelpers } from '../utils/productPageHelpers';
+import PostCard from '../parts/PostCard';
+import postsLoader from '../utils/postsLoader';
+import { getHelpers } from '../utils/postPageHelpers';
+import Image from '../parts/Image';
 
-ProductsPage.route = {
+PostsPage.route = {
   path: '/',
-  menuLabel: 'Products',
-  index: 1,
+  menuLabel: 'Posts',
+  index: 4,
   parent: '/',
-  loader: productsLoader
+  loader: postsLoader
 };
 
-export default function ProductsPage() {
+export default function PostsPage() {
 
   let {
-    products,
+    posts,
     categories,
     sortOptions,
     sortDescriptions
-  } = getHelpers(useLoaderData().products);
+  } = getHelpers(useLoaderData().posts);
 
   // get state object and setter from the outlet context
   const [
@@ -33,17 +39,20 @@ export default function ProductsPage() {
   // get the chosen category without the product count part
   const category = categoryChoice.split(' (')[0];
   // get the key and order to from the chosen sort option
-  const { key: sortKey, order: sortOrder } =
-    sortOptions.find(x => x.description === sortChoice) as SortOption;
+  const foundSort = sortOptions.find(x => x.description === sortChoice)
+    || sortOptions[0]; // fallback to first option
+
+  const { key: sortKey, order: sortOrder } = foundSort;
+
 
   return <>
     <Row>
       <Col>
-        <h2 className="text-primary">Our products</h2>
+        <h2 className="text-primary">Community Board</h2>
         <p>
-          Our products are fantastic, organic and fresh.
-          They are also very reasonably priced, considering
-          they are all harvested with the greatest care.
+          Welcome to our Community Board! Here, you can explore a variety of posts and updates from members of our community.
+          Whether you're looking to share your own news, find local events, or connect with others, you've come to the right place.
+          Browse through the posts below and stay informed about what's happening around you.
         </p>
       </Col>
     </Row>
@@ -89,16 +98,17 @@ export default function ProductsPage() {
       </Col >
     </Row >
     <Row className="mt-1 mb-n3">
-      {products
+      {posts
         // filter by the chosen category
         .filter(x => category === 'All' || x.categories.includes(category))
         // sort by the chosen choice for sorting
         .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * sortOrder)
         // map to product cards
-        .map(product => <Col xs={12} lg={6} key={product.id}>
-          <ProductCard {...product} />
+        .map(post => <Col xs={12} lg={6} key={post.id}>
+          <PostCard {...post} />
         </Col>)
       }
     </Row>
+
   </>;
-};
+}

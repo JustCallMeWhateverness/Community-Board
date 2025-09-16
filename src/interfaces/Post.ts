@@ -1,3 +1,5 @@
+import type Category from './Category';
+
 export default interface Post {
   id: number;
   title: string;
@@ -5,5 +7,5 @@ export default interface Post {
   date: number;
   slug: string;
   description: string;
-  categories: string[];
+  categories: Category[];
 }

@@ -21,16 +21,12 @@ export default function PostDetailsPage() {
     return <NotFoundPage />;
   }
 
-  const { id, title, date, description } = post;
+  const { id, title, date, description, categories } = post;
 
   return <article className="post-details">
     <Row>
       <Col>
         <h2 className="text-primary">{title}</h2>
-        <Image
-          src={'/images/posts/' + id + '.jpg'}
-          alt={'Post image of the post ' + name + '.'}
-        />
         {description.split('\n').map((x, i) => <p key={i}>{x}</p>)}
       </Col>
     </Row>
@@ -46,11 +42,19 @@ export default function PostDetailsPage() {
             </span>
           </Col>
           <Col className="ps-4 ps-sm-5 text-end text-sm-start">
-            <strong>Date:</strong>:
+            <strong>Date:</strong>
             <span
               className="d-block d-sm-inline float-sm-end"
             >
               {new Date(date).toLocaleDateString()}
+            </span>
+          </Col>
+          <Col>
+            <strong>Categories</strong>
+            <span
+              className="d-block d-sm-inline float-sm-end"
+            >
+              { }
             </span>
           </Col>
         </Row>

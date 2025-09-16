@@ -1,8 +1,3 @@
-
-
-
-
-
 import type { SortOption } from '../utils/postPageHelpers';
 import { useLoaderData } from 'react-router-dom';
 import { Row, Col, Form } from 'react-bootstrap';
@@ -16,7 +11,7 @@ import Image from '../parts/Image';
 PostsPage.route = {
   path: '/',
   menuLabel: 'Posts',
-  index: 4,
+  index: 1,
   parent: '/',
   loader: postsLoader
 };
@@ -111,4 +106,4 @@ export default function PostsPage() {
     </Row>
 
   </>;
-}
+};

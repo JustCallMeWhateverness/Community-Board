@@ -2,16 +2,16 @@ import type Route from './interfaces/Route.ts';
 import { createElement } from 'react';
 
 // page components
-import AboutPage from './pages/AboutPage.tsx';
+import CreatePostPage from './pages/CreatePostPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
-import OurVisionPage from './pages/OurVisionPage.tsx';
+import LogInPage from './pages/LogInPage.tsx';
 import PostDetailsPage from './pages/PostDetailsPage.tsx';
 import PostsPage from './pages/PostsPage.tsx';
 
 export default [
-  AboutPage,
+  CreatePostPage,
   NotFoundPage,
-  OurVisionPage,
+  LogInPage,
   PostDetailsPage,
   PostsPage
 ]

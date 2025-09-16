@@ -1,5 +1,5 @@
-$ligher-card-color: rgba(136, 207, 198, 0.281);
-$darker-card-color: rgba(143, 191, 219, 0.267);
+$ligher-card-color: rgba(136, 207, 198, 0.63);
+$darker-card-color: rgba(143, 191, 219, 0.637);
 
 .card {
   background-color: $ligher-card-color;
@@ -11,7 +11,9 @@ $darker-card-color: rgba(143, 191, 219, 0.267);
 [class^="col"]:nth-of-type(even):has(.card) {
   .card:hover {
     background-color: $darker-card-color;
-    transform: rotate(360deg) scale(0.82);
+    transform: rotateZ(160deg);
+    transition: ease-in-out;
+    transition-duration: 2s;
     box-shadow: 0 8px 16px rgba(8, 0, 0, 0.3);
   }
 }
@@ -19,7 +21,9 @@ $darker-card-color: rgba(143, 191, 219, 0.267);
 [class^="col"]:nth-of-type(odd):has(.card) {
   .card:hover {
     background-color: $darker-card-color;
-    transform: rotate(360deg) scale(0.82);
+    transform: rotateZ(180deg);
+    transition: ease-in-out;
+    transition-duration: 3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 }

@@ -19,8 +19,24 @@ main {
 .navbar-brand {
   font-family: 'Chewy';
   font-size: 30px;
+
+}
+
+.navbar {
+  box-shadow: 0px 0px 10px 10px #0f6d8a;
 }
 
 .container {
   max-width: 970px;
+
+}
+
+footer {
+  box-shadow: 0px 0px 10px 5px #0f6d8a;
+}
+
+Form {
+  background-color: #3daa777a;
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 10px 10px #3daa777a;
 }

@@ -7,9 +7,25 @@
   }
 
   button {
-    position: absolute;
+
     bottom: 1px;
     width: calc(100% - 1.2rem);
+    transition: transform 0.5s ease;
+    position: relative;
+  }
+}
+
+button:active {
+  animation: spin 2s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg) translateX(0);
+  }
+
+  to {
+    transform: rotate(360deg)translateX(-500px);
   }
 }
 

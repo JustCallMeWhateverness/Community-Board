@@ -14,7 +14,7 @@ export function getHelpers(postsJson: any) {
     'All (' + posts.length + ')',
     ...posts
       // map to category arrays from each Post
-      .map(x => x.categories)
+      .map(x => x.categoryID)
       // flatten to one array
       .flat()
       // add count of posts in to each category

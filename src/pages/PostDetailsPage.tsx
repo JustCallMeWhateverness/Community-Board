@@ -1,8 +1,7 @@
 import type Post from '../interfaces/Post';
 import { Row, Col } from 'react-bootstrap';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useParams } from 'react-router-dom';
 import NotFoundPage from './NotFoundPage';
-import Image from '../parts/Image';
 import postsLoader from '../utils/postsLoader';
 
 PostDetailsPage.route = {
@@ -13,8 +12,9 @@ PostDetailsPage.route = {
 
 export default function PostDetailsPage() {
 
-  const post =
-    useLoaderData().posts[0] as Post;
+  const { slug } = useParams();
+  const { posts } = useLoaderData() as { posts: Post[] };
+  const post = posts.find(p => p.slug === slug);
 
   // if no post found, show 404
   if (!post) {

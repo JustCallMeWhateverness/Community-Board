@@ -4,7 +4,7 @@ import { Row, Col, Form } from 'react-bootstrap';
 import { useStateContext } from '../utils/useStateObject';
 import Select from '../parts/Select';
 import PostCard from '../parts/PostCard';
-import postsLoader from '../utils/postsLoader';
+import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
 import { getHelpers } from '../utils/postPageHelpers';
 import Image from '../parts/Image';
 
@@ -13,7 +13,7 @@ PostsPage.route = {
   menuLabel: 'Posts',
   index: 1,
   parent: '/',
-  loader: postsLoader
+  loader: postsAndCategoryLoader
 };
 
 export default function PostsPage() {
@@ -23,7 +23,7 @@ export default function PostsPage() {
     categories,
     sortOptions,
     sortDescriptions
-  } = getHelpers(useLoaderData().posts);
+  } = getHelpers(useLoaderData().posts, useLoaderData().categories);
 
   // get state object and setter from the outlet context
   const [

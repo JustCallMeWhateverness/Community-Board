@@ -1,6 +1,5 @@
-export default async function categoriesLoader({ params }: any) {
+export default async function categoriesLoader() {
   let url = '/api/categories';
-  if (params.slug) { url += '?slug=' + params.slug; }
   return {
     categories:
       await (await fetch(url)).json()

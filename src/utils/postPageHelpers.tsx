@@ -1,4 +1,5 @@
 import type Post from '../interfaces/Post';
+import type Category from '../interfaces/Category';
 
 export interface SortOption {
   description: string;
@@ -6,15 +7,16 @@ export interface SortOption {
   order: number;
 }
 
-export function getHelpers(postsJson: any) {
+export function getHelpers(postsJson: any, categoryJson: any) {
 
   const posts = postsJson as Post[];
+  const category = categoryJson as Category[];
 
   const categories = [
     'All (' + posts.length + ')',
-    ...posts
+    ...category
       // map to category arrays from each Post
-      .map(x => x.categoryID)
+      .map(x => x.name)
       // flatten to one array
       .flat()
       // add count of posts in to each category

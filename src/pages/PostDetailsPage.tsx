@@ -21,7 +21,7 @@ export default function PostDetailsPage() {
     return <NotFoundPage />;
   }
 
-  const { id, title, date, description, categories } = post;
+  const { id, title, date, description, categoryID } = post;
 
   return <article className="post-details">
     <Row>

@@ -95,7 +95,7 @@ export default function PostsPage() {
     <Row className="mt-1 mb-n3">
       {posts
         // filter by the chosen category
-        .filter(x => category === 'All' || x.categories.includes(category))
+        .filter(x => category === 'All' || String(x.categoryID).includes(category))
         // sort by the chosen choice for sorting
         .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * sortOrder)
         // map to product cards

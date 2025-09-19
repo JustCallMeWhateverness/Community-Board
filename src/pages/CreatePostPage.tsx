@@ -21,30 +21,34 @@ export default function CreatePostPage() {
     title: '',
     overview: '',
     description: '',
-    category: ''
+    categoryID: 0
   });
 
   const navigate = useNavigate();
 
   function setProperty(event: React.ChangeEvent) {
-    let { name, value }: { name: string, value: string | string | string } =
-      event.target as HTMLInputElement;
-    setPost({ ...post, [name]: value });
+    let { name, value } = event.target as HTMLInputElement;
+    setPost({
+      ...post,
+      [name]: name === 'categoryID' ? Number(value) : value
+    });
   }
+
 
   async function sendForm(event: React.FormEvent) {
 
     event.preventDefault();
 
-    const payload: any = { ...post, date: new Date().toISOString() };
+    const payload: any = { ...post, date: Date.now(), slug: post.title.toLowerCase().replace(/\s+/g, '-') };
 
+    console.log(payload);
     await fetch('/api/posts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
     // navigate to
-    navigate('/posts');
+    navigate('/');
   }
 
   return <>
@@ -79,7 +83,7 @@ export default function CreatePostPage() {
         <Form.Group>
           <Form.Label>
             <p>Category</p>
-            <Form.Select onChange={setProperty} name="category" >
+            <Form.Select onChange={setProperty} name="categoryID" >
               {categories.map(({ id, name }) => <option
                 key={id}
                 value={id}

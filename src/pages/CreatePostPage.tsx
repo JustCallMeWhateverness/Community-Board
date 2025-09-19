@@ -1,19 +1,51 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
-import type Create from '../interfaces/Create';
-import Image from '../parts/Image';
 import type Post from '../interfaces/Post';
 import type Category from '../interfaces/Category';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import categoriesLoader from '../utils/categoriesLoader';
 
 
 CreatePostPage.route = {
   path: '/create-post',
   menuLabel: 'Create Post',
-  index: 2
+  index: 2,
+  loader: categoriesLoader
 };
 
 export default function CreatePostPage() {
 
+  const { categories } = useLoaderData() as { categories: Category[] };
+
+  const [post, setPost] = useState({
+    title: '',
+    overview: '',
+    description: '',
+    category: ''
+  });
+
+  const navigate = useNavigate();
+
+  function setProperty(event: React.ChangeEvent) {
+    let { name, value }: { name: string, value: string | string | string } =
+      event.target as HTMLInputElement;
+    setPost({ ...post, [name]: value });
+  }
+
+  async function sendForm(event: React.FormEvent) {
+
+    event.preventDefault();
+
+    const payload: any = { ...post, date: new Date().toISOString() };
+
+    await fetch('/api/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    // navigate to
+    navigate('/posts');
+  }
 
   return <>
 
@@ -29,30 +61,35 @@ export default function CreatePostPage() {
       </Col>
       <Col md={6}>
       </Col>
-      <Form>
+      <Form onSubmit={sendForm}>
         <Form.Group>
           <Form.Label className="d-block">
             <p>Title:</p>
-            <Form.Control type="text" name="postTitle" placeholder="Title" />
+            <Form.Control onChange={setProperty} type="text" name="title" placeholder="Title" />
           </Form.Label>
           <Form.Label className="d-block">
             <p>Overview:</p>
-            <Form.Control type="text" name="postOverview" placeholder="Overview" />
+            <Form.Control onChange={setProperty} type="text" name="overview" placeholder="Overview" />
           </Form.Label>
           <Form.Label className="d-block">
             <p>Description:</p>
-            <Form.Control type="text" name="postDescription" placeholder="Description" />
+            <Form.Control onChange={setProperty} type="text" name="description" placeholder="Description" />
           </Form.Label>
         </Form.Group>
         <Form.Group>
           <Form.Label>
             <p>Category</p>
-            <Form.Select >
-              <option>1</option>
+            <Form.Select onChange={setProperty} name="category" >
+              {categories.map(({ id, name }) => <option
+                key={id}
+                value={id}
+              >
+                {name}
+              </option>)}
             </Form.Select>
           </Form.Label></Form.Group>
 
-        <Button className="float-end">Create Post</Button>
+        <Button type="submit" className="float-end">Create Post</Button>
       </Form>
     </Row>
   </>;

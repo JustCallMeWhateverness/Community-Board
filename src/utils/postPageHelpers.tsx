@@ -13,15 +13,16 @@ export function getHelpers(postsJson: any, categoryJson: any) {
   const category = categoryJson as Category[];
 
   const categories = [
-    'All (' + posts.length + ')',
-    ...category
-      // map to category arrays from each Post
-      .map(x => x.name)
+    { label: `All (${posts.length})`, value: 'All' },
+    ...category.map(x => {
+      const count = posts.filter(post => post.categoryID === x.id).length;
+      return {
+        label: `${x.name} (${count})`,
+        value: String(x.id)
+      };
+    })
       // flatten to one array
       .flat()
-      // add count of posts in to each category
-      .map((x, _i, a) => x + ' ('
-        + a.filter(y => x === y).length + ')')
       // remove duplicates1
       .filter((x, i, a) => a.indexOf(x) === i)
       // sort (by title)

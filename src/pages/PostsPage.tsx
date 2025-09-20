@@ -4,7 +4,7 @@ import { Row, Col, Form } from 'react-bootstrap';
 import { useStateContext } from '../utils/useStateObject';
 import Select from '../parts/Select';
 import PostCard from '../parts/PostCard';
-import postsLoader from '../utils/postsLoader';
+import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
 import { getHelpers } from '../utils/postPageHelpers';
 import Image from '../parts/Image';
 
@@ -13,7 +13,7 @@ PostsPage.route = {
   menuLabel: 'Posts',
   index: 1,
   parent: '/',
-  loader: postsLoader
+  loader: postsAndCategoryLoader
 };
 
 export default function PostsPage() {
@@ -23,7 +23,7 @@ export default function PostsPage() {
     categories,
     sortOptions,
     sortDescriptions
-  } = getHelpers(useLoaderData().posts);
+  } = getHelpers(useLoaderData().posts, useLoaderData().categories);
 
   // get state object and setter from the outlet context
   const [
@@ -32,7 +32,7 @@ export default function PostsPage() {
   ] = useStateContext();
 
   // get the chosen category without the product count part
-  const category = categoryChoice.split(' (')[0];
+  const categoryValue = categoryChoice;
   // get the key and order to from the chosen sort option
   const foundSort = sortOptions.find(x => x.description === sortChoice)
     || sortOptions[0]; // fallback to first option
@@ -86,7 +86,7 @@ export default function PostsPage() {
               label="Sort by"
               value={sortChoice}
               changeHandler={(x: string) => setState('sortChoice', x)}
-              options={sortDescriptions}
+              options={sortDescriptions.map(desc => ({ label: desc, value: desc }))}
             />
           </Col>
         </Row>
@@ -95,7 +95,7 @@ export default function PostsPage() {
     <Row className="mt-1 mb-n3">
       {posts
         // filter by the chosen category
-        .filter(x => category === 'All' || String(x.categoryID).includes(category))
+        .filter(x => categoryValue === 'All' || String(x.categoryID) === categoryValue)
         // sort by the chosen choice for sorting
         .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * sortOrder)
         // map to product cards

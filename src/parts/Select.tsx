@@ -1,10 +1,15 @@
 import { Row, Col } from 'react-bootstrap';
 
+interface Option {
+  label: string;
+  value: string;
+}
+
 interface SelectProps {
   label: string;
   value: string;
   changeHandler: Function;
-  options: string[];
+  options: Option[];
 }
 
 export default function Select(
@@ -22,7 +27,7 @@ export default function Select(
           value={value}
           onChange={e => changeHandler(e.target.value)}
         >
-          {options.map((x, i) => <option key={i}>{x}</option>)}
+          {options.map((x, i) => <option key={i} value={x.value}>{x.label}</option>)}
         </select>
       </Col>
     </Row>

@@ -48,7 +48,7 @@ export default function LogInPage() {
     });
 
     if (response.ok) {
-      navigate('/');
+      navigate('/User');
     } else {
       alert('Login failed');
     }
@@ -68,20 +68,6 @@ export default function LogInPage() {
       alert('Signup successful! You can now log in.');
     } else {
       alert('Signup failed');
-    }
-  }
-
-  async function handleLogout() {
-    const response = await fetch('/api/login', {
-      method: 'DELETE',
-      credentials: 'include', // 🔑 send cookies with request
-    });
-
-    if (response.ok) {
-      alert('Logged out successfully.');
-      navigate('/log-in');
-    } else {
-      alert('Logout failed.');
     }
   }
 
@@ -117,9 +103,6 @@ export default function LogInPage() {
         </Form.Group>
         <Button type="submit" className="float-end">
           Login
-        </Button>
-        <Button variant="danger" onClick={handleLogout}>
-          Logout
         </Button>
       </Form>
 

@@ -41,7 +41,6 @@ export default function CreatePostPage() {
 
     const payload: any = { ...post, date: Date.now(), slug: post.title.toLowerCase().replace(/\s+/g, '-') };
 
-    console.log(payload);
     await fetch('/api/posts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

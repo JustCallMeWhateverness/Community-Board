@@ -1,8 +1,7 @@
 import type Post from '../interfaces/Post';
 import { Row, Col } from 'react-bootstrap';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useParams } from 'react-router-dom';
 import NotFoundPage from './NotFoundPage';
-import Image from '../parts/Image';
 import postsLoader from '../utils/postsLoader';
 
 PostDetailsPage.route = {
@@ -13,24 +12,21 @@ PostDetailsPage.route = {
 
 export default function PostDetailsPage() {
 
-  const post =
-    useLoaderData().posts[0] as Post;
+  const { slug } = useParams();
+  const { posts } = useLoaderData() as { posts: Post[] };
+  const post = posts.find(p => p.slug === slug);
 
   // if no post found, show 404
   if (!post) {
     return <NotFoundPage />;
   }
 
-  const { id, title, date, description } = post;
+  const { id, title, date, description, categoryID } = post;
 
   return <article className="post-details">
     <Row>
       <Col>
         <h2 className="text-primary">{title}</h2>
-        <Image
-          src={'/images/posts/' + id + '.jpg'}
-          alt={'Post image of the post ' + name + '.'}
-        />
         {description.split('\n').map((x, i) => <p key={i}>{x}</p>)}
       </Col>
     </Row>
@@ -46,11 +42,19 @@ export default function PostDetailsPage() {
             </span>
           </Col>
           <Col className="ps-4 ps-sm-5 text-end text-sm-start">
-            <strong>Date:</strong>:
+            <strong>Date:</strong>
             <span
               className="d-block d-sm-inline float-sm-end"
             >
               {new Date(date).toLocaleDateString()}
+            </span>
+          </Col>
+          <Col>
+            <strong>Categories</strong>
+            <span
+              className="d-block d-sm-inline float-sm-end"
+            >
+              { }
             </span>
           </Col>
         </Row>

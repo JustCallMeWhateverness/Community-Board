@@ -12,8 +12,9 @@ export default function PostCard(
     role="button" /*sets the cursor to pointer*/
     onClick={() => navigate('/posts/' + slug)}
   >
-    <Card.Body as={Row}>
+    <Card.Body as={Row} >
       <Col>
+
         <Card.Title>{title}</Card.Title>
         <Card.Text className="mb-0">
           <strong className="d-none d-none d-sm-inline-block">Overview:</strong>
@@ -29,14 +30,6 @@ export default function PostCard(
           </span>
         </Card.Text>
         <Button variant="primary">More info</Button>
-      </Col>
-      <Col>
-        <Card.Img
-          as={Image}
-          src={'/images/posts/' + id + '.jpg'}
-          alt={'Post image of the Post ' + title + '.'}
-          className="h-100"
-        />
       </Col>
     </Card.Body>
   </Card >;

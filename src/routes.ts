@@ -4,18 +4,20 @@ import { createElement } from 'react';
 // page components
 import CreatePostPage from './pages/CreatePostPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
-import LogInPage from './pages/LogInPage.tsx';
+
 import PostDetailsPage from './pages/PostDetailsPage.tsx';
 import PostsPage from './pages/PostsPage.tsx';
-import UserPage from './pages/UserPage.tsx';
+import UserPage from './accountPage/UserPage.tsx';
+import AccountPage from './accountPage/AccountRoute.tsx';
 
 export default [
   CreatePostPage,
   NotFoundPage,
-  LogInPage,
   PostDetailsPage,
   PostsPage,
-  UserPage
+  UserPage,
+  AccountPage
+
 ]
   // map the route property of each page component to a Route
   .map(x => (({ element: createElement(x), ...x.route }) as Route))

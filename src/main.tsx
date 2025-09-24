@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider }
 import '../sass/index.scss';
 import routes from './routes';
 import App from './App';
+import { UserProvider } from './hooks/UserContext';
 
 // Create a router using settings/content from 'routes.tsx'
 const router = createBrowserRouter([
@@ -20,6 +21,8 @@ const router = createBrowserRouter([
 // Create the React root element
 createRoot(document.querySelector('#root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </StrictMode>
 );

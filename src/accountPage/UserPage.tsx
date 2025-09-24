@@ -1,21 +1,19 @@
 import { Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../hooks/useUser';
+import { useUser } from '../hooks/UserContext';
 
 
 UserPage.route = {
   path: '/user',
-  menuLabel: 'User',
-  index: 4
 }
 
 
 export default function UserPage() {
 
+  const { user, setUser, loading } = useUser();
   const navigate = useNavigate();
-  const { user, loading } = useUser();
-  if (loading) return <p>Loading user data...</p>;
 
+  if (loading) return <p>Loading user data...</p>;
   if (!user) return <p className="text-danger">No user is logged in.</p>;
 
   async function handleLogout() {
@@ -25,8 +23,8 @@ export default function UserPage() {
     });
 
     if (response.ok) {
-      alert('Logged out successfully.');
-      navigate('/log-in');
+      setUser(null);
+      navigate('/');
     } else {
       alert('Logout failed.');
     }

@@ -1,5 +1,4 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
-import type Post from '../interfaces/Post';
 import type Category from '../interfaces/Category';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -68,21 +67,32 @@ export default function CreatePostPage() {
         <Form.Group>
           <Form.Label className="d-block">
             <p>Title:</p>
-            <Form.Control onChange={setProperty} type="text" name="title" placeholder="Title" />
+            <Form.Control required
+              onChange={setProperty}
+              type="text" name="title" placeholder="Title" />
           </Form.Label>
           <Form.Label className="d-block">
             <p>Overview:</p>
-            <Form.Control onChange={setProperty} type="text" name="overview" placeholder="Overview" />
+            <Form.Control required
+              onChange={setProperty}
+              type="text" name="overview" placeholder="Overview" />
           </Form.Label>
           <Form.Label className="d-block">
             <p>Description:</p>
-            <Form.Control onChange={setProperty} type="text" name="description" placeholder="Description" />
+            <Form.Control required
+              onChange={setProperty}
+              type="text" name="description" placeholder="Description" />
           </Form.Label>
         </Form.Group>
         <Form.Group>
           <Form.Label>
             <p>Category</p>
-            <Form.Select onChange={setProperty} name="categoryID" >
+            <Form.Select required
+              onChange={setProperty}
+              name="categoryID" defaultValue="">
+              <option value="" disabled >
+                Select a category
+              </option>
               {categories.map(({ id, name }) => <option
                 key={id}
                 value={id}

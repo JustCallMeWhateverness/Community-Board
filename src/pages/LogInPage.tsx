@@ -130,7 +130,7 @@ export default function LogInPage() {
           <Form onSubmit={handleSignup}>
             <Form.Group>
               <Form.Label>Username</Form.Label>
-              <Form.Control
+              <Form.Control required
                 onChange={(e) => setProperty(e, 'signup')}
                 type="text"
                 name="username"
@@ -138,7 +138,7 @@ export default function LogInPage() {
               />
 
               <Form.Label>Email</Form.Label>
-              <Form.Control
+              <Form.Control required
                 onChange={(e) => setProperty(e, 'signup')}
                 type="email"
                 name="email"
@@ -146,7 +146,7 @@ export default function LogInPage() {
               />
 
               <Form.Label>Password</Form.Label>
-              <Form.Control
+              <Form.Control required
                 onChange={(e) => setProperty(e, 'signup')}
                 type="password"
                 name="password"

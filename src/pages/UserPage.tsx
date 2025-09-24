@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import type User from '../interfaces/User';
 import { Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../hooks/useUser';
 
 
 UserPage.route = {
@@ -12,41 +11,12 @@ UserPage.route = {
 
 
 export default function UserPage() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Fetch the currently logged-in user from session
-    async function fetchUser() {
-      try {
-        const response = await fetch("/api/login", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        const data = await response.json();
-
-        if (response.ok && !data.error) {
-          setUser(data);
-        } else {
-          setError(data.error || "Failed to fetch user");
-        }
-      } catch (err) {
-        setError("Network error");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchUser();
-  }, []);
-
+  const { user, loading } = useUser();
   if (loading) return <p>Loading user data...</p>;
-  if (error) return <p className="text-danger">{error}</p>;
 
-  if (!user) return <p>No user is logged in.</p>;
+  if (!user) return <p className="text-danger">No user is logged in.</p>;
 
   async function handleLogout() {
     const response = await fetch('/api/login', {

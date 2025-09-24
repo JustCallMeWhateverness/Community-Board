@@ -3,6 +3,7 @@ import type Category from '../interfaces/Category';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import categoriesLoader from '../utils/categoriesLoader';
+import { useUser } from '../hooks/useUser';
 
 
 CreatePostPage.route = {
@@ -33,6 +34,10 @@ export default function CreatePostPage() {
     });
   }
 
+  const { user, loading } = useUser();
+
+  if (loading) return <p>Loading user data...</p>;
+  if (!user) return <p className="text-danger">You must be logged in to create a post.</p>;
 
   async function sendForm(event: React.FormEvent) {
 

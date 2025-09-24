@@ -1,12 +1,11 @@
 import type { SortOption } from '../utils/postPageHelpers';
 import { useLoaderData } from 'react-router-dom';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { useStateContext } from '../utils/useStateObject';
 import Select from '../parts/Select';
 import PostCard from '../parts/PostCard';
 import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
 import { getHelpers } from '../utils/postPageHelpers';
-import Image from '../parts/Image';
 
 PostsPage.route = {
   path: '/',
@@ -27,7 +26,7 @@ export default function PostsPage() {
 
   // get state object and setter from the outlet context
   const [
-    { categoryChoice, sortChoice, bwImages },
+    { categoryChoice, sortChoice },
     setState
   ] = useStateContext();
 
@@ -54,25 +53,6 @@ export default function PostsPage() {
     <Row>
       <Col className="px-4 pt-1 pb-4">
         <Row className="bg-primary-subtle pt-3 rounded">
-          <Col md="4">
-            <label className="d-block">
-              <div className="d-none d-md-block">
-                Color images:
-              </div>
-              <div
-                className={'form-switch-text position-absolute' +
-                  ' d-md-none px-5' + (bwImages ? '' : ' text-white')}
-              >
-                B/W Images
-                <span className="float-end">Color Images</span>
-              </div>
-              <Form.Switch
-                className="mt-2 mb-4 mb-md-2"
-                defaultChecked={!bwImages}
-                onChange={e => setState('bwImages', !e.target.checked)}
-              />
-            </label>
-          </Col>
           <Col md="4">
             <Select
               label="Category"

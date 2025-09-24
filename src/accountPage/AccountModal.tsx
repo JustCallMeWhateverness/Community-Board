@@ -1,11 +1,10 @@
-import { Button } from 'react-bootstrap';
-import { useState } from 'react';
-
+import { Button, Modal } from "react-bootstrap";
+import { useState, useEffect } from 'react';
 import { useUser } from '../hooks/UserContext';
 import Login from "./Login";
 import Register from "./Register";
 import UserPage from "./UserPage";
-import { Modal } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
 export default function AccountModal({
   show,
@@ -17,8 +16,14 @@ export default function AccountModal({
   const { user, loading } = useUser();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const navigate = useNavigate();
 
-
+  useEffect(() => {
+    if (user) {
+      onHide();
+      navigate("/user");
+    }
+  }, [user]);
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -27,9 +32,7 @@ export default function AccountModal({
         <Modal.Title>Log in or Sign up! </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {user ? (
-          <UserPage />
-        ) : (
+        {!user && (
           <div>
             {!showLogin && !showRegister && (
               <>

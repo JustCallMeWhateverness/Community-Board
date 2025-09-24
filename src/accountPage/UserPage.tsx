@@ -49,6 +49,18 @@ export default function UserPage() {
           </div>
         </Col>
       </Row>
+      <Row className="mt-4">
+        <Col>
+          <h4>Your Posts</h4>
+          <p>(This section can be expanded to show user's posts.)</p>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col>
+          <h4>Your Comments</h4>
+          <p>(This section can be expanded to show user's comments.)</p>
+        </Col>
+      </Row>
     </>
   );
 }

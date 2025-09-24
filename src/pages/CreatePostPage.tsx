@@ -43,7 +43,7 @@ export default function CreatePostPage() {
 
     event.preventDefault();
 
-    const payload: any = { ...post, date: Date.now(), slug: post.title.toLowerCase().replace(/\s+/g, '-') };
+    const payload: any = { ...post, userID: user?.id, date: Date.now(), slug: post.title.toLowerCase().replace(/\s+/g, '-') };
 
     await fetch('/api/posts', {
       method: 'POST',

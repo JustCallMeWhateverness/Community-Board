@@ -30,8 +30,8 @@ export function getHelpers(postsJson: any, categoryJson: any) {
   ];
 
   const sortOptions: SortOption[] = [
-    { description: 'Date (newest to oldest', key: 'date', order: 1 },
-    { description: 'Date (oldest to newest)', key: 'date', order: -1 },
+    { description: 'Date (newest to oldest', key: 'date', order: -1 },
+    { description: 'Date (oldest to newest)', key: 'date', order: 1 },
     { description: 'Post title (a-z)', key: 'title', order: 1 },
     { description: 'Post title (z-a)', key: 'title', order: -1 }
   ];

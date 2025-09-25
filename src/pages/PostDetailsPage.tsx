@@ -27,44 +27,44 @@ export default function PostDetailsPage() {
   const { title, overview, date, description, categoryID, userID } = post;
 
   return <article className="post-details">
-    <Row>
+    <Row className="text-center">
       <Col>
         <h2 className="text-primary">{title}</h2>
         {overview.split('\n').map((x, i) => <p key={i}>{x}</p>)}
       </Col>
     </Row>
-    <Row>
+    <Row className="text-center">
       <Col className="px-4 pb-4">
         <Row className="p-3 bg-primary-subtle rounded">
-          <Col className="pe-4 pe-sm-5 border-end border-primary">
-            <strong>Description</strong>:
+          <Col xs={12} className="mb-2">
+            <strong className="d-block">Description:</strong>
             <span
-              className="d-block d-sm-inline float-sm-end"
+              className="d-block d-sm-inline ms-2"
             >
               {description}
             </span>
           </Col>
-          <Col className="ps-4 ps-sm-5 text-end text-sm-start">
-            <strong>Date created:</strong>
+          <Col xs={12} className="mb-2">
+            <strong className="d-block">Date created:</strong>
             <span
-              className="d-block d-sm-inline float-sm-end"
+              className="d-block d-sm-inline ms-2"
             >
               {new Date(date).toLocaleDateString()}
             </span>
           </Col>
-          <Col className="text-end text-sm-start">
-            <strong>Category:</strong>
+          <Col xs={12} className=" mb-2">
+            <strong className="d-block">Category:</strong>
             <span
-              className="d-block d-sm-inline float-sm-end"
+              className="d-block d-sm-inline ms-2"
             >
               {categories.find(c => c.id === categoryID)?.name || 'Uncategorized'}
 
             </span>
           </Col>
-          <Col className="text-end text-sm-start">
-            <strong>Created by:</strong>
+          <Col xs={12} className="mb-2">
+            <strong className="d-block">Created by:</strong>
             <span
-              className="d-block d-sm-inline float-sm-end"
+              className="d-block d-sm-inline ms-2"
             >
               {userID === user.id ? user.username : 'Redacted'}
 

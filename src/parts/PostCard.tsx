@@ -1,6 +1,6 @@
 import type Post from '../interfaces/Post';
 import { useNavigate } from 'react-router-dom';
-import { Card, Button, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 
 export default function PostCard(
   { title, overview, date, slug }: Post
@@ -30,4 +30,3 @@ export default function PostCard(
     </Card.Body>
   </Card >;
 }
-//<Link to={'/posts/' + slug}> </Link>

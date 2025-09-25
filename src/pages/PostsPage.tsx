@@ -1,4 +1,3 @@
-import type { SortOption } from '../utils/postPageHelpers';
 import { useLoaderData } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import { useStateContext } from '../utils/useStateObject';
@@ -42,7 +41,7 @@ export default function PostsPage() {
   return <>
     <Row>
       <Col>
-        <h2 className="text-primary">Community Board</h2>
+        <h2 className="text-primary text-center">Community Board</h2>
         <p>
           Welcome to our Community Board! Here, you can explore a variety of posts and updates from members of our community.
           Whether you're looking to share your own news, find local events, or connect with others, you've come to the right place.

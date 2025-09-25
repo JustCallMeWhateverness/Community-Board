@@ -28,6 +28,10 @@ export default function CreatePostPage() {
 
   function setProperty(event: React.ChangeEvent) {
     let { name, value } = event.target as HTMLInputElement;
+    if (name !== 'categoryID') {
+      // Capitalize first letter
+      value = value.charAt(0).toUpperCase() + value.slice(1);
+    }
     setPost({
       ...post,
       [name]: name === 'categoryID' ? Number(value) : value
@@ -50,7 +54,6 @@ export default function CreatePostPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    // navigate to
     navigate('/');
   }
 

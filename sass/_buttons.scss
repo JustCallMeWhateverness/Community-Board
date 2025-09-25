@@ -3,12 +3,13 @@
 .card {
   .col:has(button) {
     position: relative;
+    padding-bottom: 40px;
   }
 
   button {
+    position: absolute;
     bottom: 1px;
     width: calc(100% - 1.2rem);
-    margin: 0.6rem;
   }
 }
 

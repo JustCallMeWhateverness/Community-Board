@@ -26,8 +26,8 @@ export default function PostCard(
             {new Date(date).toLocaleDateString()}
           </span>
         </Card.Text>
-        <Button variant="primary">More info</Button>
       </Col>
     </Card.Body>
   </Card >;
 }
+//<Link to={'/posts/' + slug}> </Link>

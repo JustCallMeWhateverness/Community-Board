@@ -51,11 +51,11 @@ export default function UserPage() {
 
   return (
     <>
-      <Row>
+      <Row className="text-center">
         <Col>
           <h2 className="text-primary">User Page</h2>
 
-          <div>
+          <Col className="border p-4 rounded bg-light">
             <h3>{user.username}</h3>
             <p>Email: {user.email}</p>
             <p>Role: {user.role}</p>
@@ -64,20 +64,20 @@ export default function UserPage() {
             <Button variant="danger" onClick={handleLogout}>
               Logout
             </Button>
-          </div>
+          </Col>
         </Col>
       </Row>
-      <Row className="mt-4">
+      <Row className="mt-4 text-center">
         <Col>
           <h4>Your Posts</h4>
           {posts.length === 0 ? (
             <p>You haven't created any posts yet.</p>
           ) : (
-            <ul className="list-unstyled">
+            <ul className="list-unstyled ">
               {posts.map((post) => (
-                <li key={post.id}>
+                <li key={post.id} className="border p-3 rounded bg-light mb-3">
                   <Button
-                    variant="link"
+                    variant="button"
                     onClick={() => navigate("/posts/" + post.slug)}
                     className="p-0"
                   >
@@ -89,7 +89,7 @@ export default function UserPage() {
           )}
         </Col>
       </Row>
-      <Row className="mt-4">
+      <Row className="mt-4 text-center">
         <Col>
           <h4>Your Comments</h4>
           <p>(This section can be expanded to show user's comments.)</p>

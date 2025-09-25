@@ -5,5 +5,6 @@ export default interface Post {
   date: number;
   slug: string;
   description: string;
-  categories: string[];
+  categoryID: number;
+  userID: number;
 }

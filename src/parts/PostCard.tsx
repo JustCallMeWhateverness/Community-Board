@@ -15,7 +15,6 @@ export default function PostCard(
       <Col className="text-center">
         <Card.Title>{title}</Card.Title>
         <Card.Text className="mb-0">
-          <strong className="d-none d-none d-sm-inline-block">Overview:</strong>
           <span className="ms-2">{overview}</span>
         </Card.Text>
         <Card.Title></Card.Title>

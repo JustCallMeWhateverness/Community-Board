@@ -57,12 +57,15 @@ export default function UserPage() {
 
           <Col className="border p-4 rounded bg-light">
             <h3>{user.username}</h3>
-            <p>Email: {user.email}</p>
-            <p>Role: {user.role}</p>
-            <p>Account Created: {user.created}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Role: </strong>{user.role}</p>
+            <p><strong>Account Created:</strong> {user.created}</p>
             <hr />
             <Button variant="danger" onClick={handleLogout}>
               Logout
+            </Button>
+            <Button variant="secondary" className="ms-2" >
+              Edit information
             </Button>
           </Col>
         </Col>
@@ -81,14 +84,16 @@ export default function UserPage() {
                     onClick={() => navigate("/posts/" + post.slug)}
                     className="p-0"
                   >
-                    <strong>{post.title}</strong>, {post.overview}
+                    <strong>{post.title}</strong>, {post.overview}<hr />
+                    <Button className="ms-2 btn btn-secondary btn-sm">Edit</Button>
+                    <Button className="ms-2 btn btn-danger btn-sm">Delete</Button>
                   </Button>
                 </li>
               ))}
             </ul>
           )}
         </Col>
-      </Row>
+      </Row >
       <Row className="mt-4 text-center">
         <Col>
           <h4>Your Comments</h4>

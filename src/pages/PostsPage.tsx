@@ -1,4 +1,3 @@
-import type { SortOption } from '../utils/postPageHelpers';
 import { useLoaderData } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import { useStateContext } from '../utils/useStateObject';

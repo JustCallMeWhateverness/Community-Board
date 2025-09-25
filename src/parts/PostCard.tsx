@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, Button, Row, Col } from 'react-bootstrap';
 
 export default function PostCard(
-  { id, title, overview, date, slug }: Post
+  { title, overview, date, slug }: Post
 ) {
   const navigate = useNavigate();
   return <Card

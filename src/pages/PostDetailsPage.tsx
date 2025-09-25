@@ -24,7 +24,7 @@ export default function PostDetailsPage() {
     return <NotFoundPage />;
   }
   if (!user) return <p className="text-danger">No user is logged in.</p>;
-  const { id, title, overview, date, description, categoryID, userID } = post;
+  const { title, overview, date, description, categoryID, userID } = post;
 
   return <article className="post-details">
     <Row>
@@ -52,7 +52,7 @@ export default function PostDetailsPage() {
               {new Date(date).toLocaleDateString()}
             </span>
           </Col>
-          <Col>
+          <Col className="text-end text-sm-start">
             <strong>Category:</strong>
             <span
               className="d-block d-sm-inline float-sm-end"
@@ -61,7 +61,7 @@ export default function PostDetailsPage() {
 
             </span>
           </Col>
-          <Col>
+          <Col className="text-end text-sm-start">
             <strong>Created by:</strong>
             <span
               className="d-block d-sm-inline float-sm-end"

@@ -66,7 +66,7 @@ export default function PostDetailsPage() {
             <span
               className="d-block d-sm-inline ms-2"
             >
-              {userID === user.id ? user.username : 'Redacted'}
+              {userID === user.id ? user.username : 'User not found'}
 
             </span>
           </Col>

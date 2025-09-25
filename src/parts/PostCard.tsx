@@ -12,18 +12,17 @@ export default function PostCard(
     onClick={() => navigate('/posts/' + slug)}
   >
     <Card.Body as={Row} >
-      <Col>
-
+      <Col className="text-center">
         <Card.Title>{title}</Card.Title>
         <Card.Text className="mb-0">
           <strong className="d-none d-none d-sm-inline-block">Overview:</strong>
-          <span className="float-end">{overview}</span>
+          <span className="ms-2">{overview}</span>
         </Card.Text>
         <Card.Title></Card.Title>
         <Card.Text className="mb-0">
           <strong>Date created:</strong>
           <span
-            className="d-block d-sm-inline float-sm-end"
+            className="d-block d-sm-inline ms-2"
           >
             {new Date(date).toLocaleDateString()}
           </span>

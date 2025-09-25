@@ -1,24 +1,18 @@
-
-
-
-
-
 import type { SortOption } from '../utils/postPageHelpers';
 import { useLoaderData } from 'react-router-dom';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { useStateContext } from '../utils/useStateObject';
 import Select from '../parts/Select';
 import PostCard from '../parts/PostCard';
-import postsLoader from '../utils/postsLoader';
+import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
 import { getHelpers } from '../utils/postPageHelpers';
-import Image from '../parts/Image';
 
 PostsPage.route = {
   path: '/',
   menuLabel: 'Posts',
-  index: 4,
+  index: 1,
   parent: '/',
-  loader: postsLoader
+  loader: postsAndCategoryLoader
 };
 
 export default function PostsPage() {
@@ -28,16 +22,16 @@ export default function PostsPage() {
     categories,
     sortOptions,
     sortDescriptions
-  } = getHelpers(useLoaderData().posts);
+  } = getHelpers(useLoaderData().posts, useLoaderData().categories);
 
   // get state object and setter from the outlet context
   const [
-    { categoryChoice, sortChoice, bwImages },
+    { categoryChoice, sortChoice },
     setState
   ] = useStateContext();
 
   // get the chosen category without the product count part
-  const category = categoryChoice.split(' (')[0];
+  const categoryValue = categoryChoice;
   // get the key and order to from the chosen sort option
   const foundSort = sortOptions.find(x => x.description === sortChoice)
     || sortOptions[0]; // fallback to first option
@@ -60,25 +54,6 @@ export default function PostsPage() {
       <Col className="px-4 pt-1 pb-4">
         <Row className="bg-primary-subtle pt-3 rounded">
           <Col md="4">
-            <label className="d-block">
-              <div className="d-none d-md-block">
-                Color images:
-              </div>
-              <div
-                className={'form-switch-text position-absolute' +
-                  ' d-md-none px-5' + (bwImages ? '' : ' text-white')}
-              >
-                B/W Images
-                <span className="float-end">Color Images</span>
-              </div>
-              <Form.Switch
-                className="mt-2 mb-4 mb-md-2"
-                defaultChecked={!bwImages}
-                onChange={e => setState('bwImages', !e.target.checked)}
-              />
-            </label>
-          </Col>
-          <Col md="4">
             <Select
               label="Category"
               value={categoryChoice}
@@ -91,7 +66,7 @@ export default function PostsPage() {
               label="Sort by"
               value={sortChoice}
               changeHandler={(x: string) => setState('sortChoice', x)}
-              options={sortDescriptions}
+              options={sortDescriptions.map(desc => ({ label: desc, value: desc }))}
             />
           </Col>
         </Row>
@@ -100,7 +75,7 @@ export default function PostsPage() {
     <Row className="mt-1 mb-n3">
       {posts
         // filter by the chosen category
-        .filter(x => category === 'All' || x.categories.includes(category))
+        .filter(x => categoryValue === 'All' || String(x.categoryID) === categoryValue)
         // sort by the chosen choice for sorting
         .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * sortOrder)
         // map to product cards
@@ -111,4 +86,4 @@ export default function PostsPage() {
     </Row>
 
   </>;
-}
+};

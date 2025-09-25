@@ -1,7 +1,6 @@
 import type Post from '../interfaces/Post';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Row, Col } from 'react-bootstrap';
-import Image from './Image';
 
 export default function PostCard(
   { id, title, overview, date, slug }: Post
@@ -22,7 +21,7 @@ export default function PostCard(
         </Card.Text>
         <Card.Title></Card.Title>
         <Card.Text className="mb-0">
-          <strong>Date:</strong>
+          <strong>Date created:</strong>
           <span
             className="d-block d-sm-inline float-sm-end"
           >

@@ -2,32 +2,35 @@ import type Post from '../interfaces/Post';
 import { Row, Col } from 'react-bootstrap';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
 import NotFoundPage from './NotFoundPage';
-import postsLoader from '../utils/postsLoader';
+import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
+import { useUser } from "../hooks/UserContext";
 
 PostDetailsPage.route = {
   path: '/posts/:slug',
   parent: '/',
-  loader: postsLoader
+  loader: postsAndCategoryLoader
 };
 
 export default function PostDetailsPage() {
 
+  const { user } = useUser();
   const { slug } = useParams();
   const { posts } = useLoaderData() as { posts: Post[] };
   const post = posts.find(p => p.slug === slug);
+  const { categories } = useLoaderData() as { categories: any[] };
 
   // if no post found, show 404
   if (!post) {
     return <NotFoundPage />;
   }
-
-  const { id, title, date, description, categoryID } = post;
+  if (!user) return <p className="text-danger">No user is logged in.</p>;
+  const { id, title, overview, date, description, categoryID, userID } = post;
 
   return <article className="post-details">
     <Row>
       <Col>
         <h2 className="text-primary">{title}</h2>
-        {description.split('\n').map((x, i) => <p key={i}>{x}</p>)}
+        {overview.split('\n').map((x, i) => <p key={i}>{x}</p>)}
       </Col>
     </Row>
     <Row>
@@ -42,7 +45,7 @@ export default function PostDetailsPage() {
             </span>
           </Col>
           <Col className="ps-4 ps-sm-5 text-end text-sm-start">
-            <strong>Date:</strong>
+            <strong>Date created:</strong>
             <span
               className="d-block d-sm-inline float-sm-end"
             >
@@ -50,11 +53,21 @@ export default function PostDetailsPage() {
             </span>
           </Col>
           <Col>
-            <strong>Categories</strong>
+            <strong>Category:</strong>
             <span
               className="d-block d-sm-inline float-sm-end"
             >
-              { }
+              {categories.find(c => c.id === categoryID)?.name || 'Uncategorized'}
+
+            </span>
+          </Col>
+          <Col>
+            <strong>Created by:</strong>
+            <span
+              className="d-block d-sm-inline float-sm-end"
+            >
+              {userID === user.id ? user.username : 'Redacted'}
+
             </span>
           </Col>
         </Row>

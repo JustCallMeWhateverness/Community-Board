@@ -5,7 +5,6 @@ import type Post from '../interfaces/Post';
 import PostCard from '../parts/PostCard';
 import { useEffect, useState } from "react";
 
-
 UserPage.route = {
   path: '/user',
 }
@@ -48,7 +47,6 @@ export default function UserPage() {
     }
   }
 
-
   return (
     <>
       <Row className="text-center">
@@ -79,15 +77,10 @@ export default function UserPage() {
             <ul className="list-unstyled ">
               {posts.map((post) => (
                 <li key={post.id} className="border p-3 rounded bg-light mb-3">
-                  <Button
-                    variant="button"
-                    onClick={() => navigate("/posts/" + post.slug)}
-                    className="p-0"
-                  >
-                    <strong>{post.title}</strong>, {post.overview}<hr />
-                    <Button className="ms-2 btn btn-secondary btn-sm">Edit</Button>
-                    <Button className="ms-2 btn btn-danger btn-sm">Delete</Button>
-                  </Button>
+                  <strong>{post.title}</strong>, {post.overview}<hr />
+                  <Button className="ms-2 btn btn-primary btn-sm" onClick={() => navigate('/posts/' + post.slug)}>Details</Button>
+                  <Button className="ms-2 btn btn-secondary btn-sm">Edit</Button>
+                  <Button className="ms-2 btn btn-danger btn-sm">Delete</Button>
                 </li>
               ))}
             </ul>

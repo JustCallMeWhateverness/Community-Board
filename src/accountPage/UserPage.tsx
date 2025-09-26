@@ -5,6 +5,8 @@ import type Post from '../interfaces/Post';
 import PostCard from '../parts/PostCard';
 import { useEffect, useState } from "react";
 import EditModal from "./UserPage/EditModal";
+import EditUserModal from "./UserPage/EditUserModal";
+import type User from '../interfaces/User';
 
 UserPage.route = {
   path: '/user',
@@ -18,6 +20,8 @@ export default function UserPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [postToDelete, setPostToDelete] = useState<Post | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditUserModal, setShowEditUserModal] = useState(false);
+  const [userToEdit, setUserToEdit] = useState<User | null>(null);
   const [postToEdit, setPostToEdit] = useState<Post | null>(null);
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
   const navigate = useNavigate();
@@ -89,6 +93,10 @@ export default function UserPage() {
     setPostToEdit(post);
     setShowEditModal(true);
   }
+  function handleEditUser(user: User) {
+    setUserToEdit(user);
+    setShowEditUserModal(true);
+  }
 
   async function handleSave(updatedPost: Post) {
     const response = await fetch(`/api/posts/${updatedPost.id}`, {
@@ -103,6 +111,18 @@ export default function UserPage() {
       );
     } else {
       alert("Failed to update post.");
+    }
+  }
+  async function handleSaveUser(updatedUser: User) {
+    const response = await fetch(`/api/users/${updatedUser.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedUser),
+    });
+    if (response.ok) {
+      setUser(updatedUser); // Update user context with new data
+    } else {
+      alert("Failed to update user information.");
     }
   }
 
@@ -121,7 +141,7 @@ export default function UserPage() {
             <Button variant="danger" onClick={handleLogout}>
               Logout
             </Button>
-            <Button variant="secondary" className="ms-2" >
+            <Button variant="secondary" className="ms-2" onClick={() => handleEditUser(user)}>
               Edit information
             </Button>
           </Col>
@@ -176,6 +196,14 @@ export default function UserPage() {
           post={postToEdit}
           categories={categories}
           onSave={handleSave}
+        />
+      )}
+      {userToEdit && (
+        <EditUserModal
+          show={showEditUserModal}
+          onHide={() => setShowEditUserModal(false)}
+          user={userToEdit}
+          onSave={handleSaveUser}
         />
       )}
     </>

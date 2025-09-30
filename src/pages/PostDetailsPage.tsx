@@ -1,8 +1,10 @@
 import type Post from '../interfaces/Post';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import NotFoundPage from './NotFoundPage';
 import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
+import type User from '../interfaces/User.ts';
 import { useUser } from "../hooks/UserContext";
 
 PostDetailsPage.route = {
@@ -13,18 +15,32 @@ PostDetailsPage.route = {
 
 export default function PostDetailsPage() {
 
-  const { user } = useUser();
   const { slug } = useParams();
-  const { posts } = useLoaderData() as { posts: Post[] };
+  const { posts, categories, } = useLoaderData() as {
+    posts: Post[],
+    categories: any[],
+  };
   const post = posts.find(p => p.slug === slug);
-  const { categories } = useLoaderData() as { categories: any[] };
+  const [author, setAuthor] = useState<User | null>(null);
+  const { user } = useUser();
+  const [showAuthor, setShowAuthor] = useState(false);
+
+  useEffect(() => {
+    if (post) {
+      fetch(`/api/users/${post.userID}`)
+        .then(res => res.json())
+        .then(data => setAuthor(data))
+    }
+  }, [post, showAuthor, user]);
+
 
   // if no post found, show 404
   if (!post) {
     return <NotFoundPage />;
   }
-  if (!user) return <p className="text-danger">No user is logged in.</p>;
-  const { title, overview, date, description, categoryID, userID } = post;
+
+
+  const { title, overview, date, description, categoryID } = post;
 
   return <article className="post-details">
     <Row className="text-center">
@@ -63,12 +79,20 @@ export default function PostDetailsPage() {
           </Col>
           <Col xs={12} className="mb-2">
             <strong className="d-block">Created by:</strong>
-            <span
-              className="d-block d-sm-inline ms-2"
-            >
-              {userID === user.id ? user.username : 'User not found'}
-
-            </span>
+            {!showAuthor ? (
+              <Button
+                className="ms-2 btn btn-sm "
+                onClick={() => setShowAuthor(true)}
+              >
+                Show User
+              </Button>
+            ) : (
+              <span className="d-block d-sm-inline ms-2">
+                {!user
+                  ? "Have to be logged in to see user information"
+                  : author?.username ?? "Unknown user"}
+              </span>
+            )}
           </Col>
         </Row>
       </Col>

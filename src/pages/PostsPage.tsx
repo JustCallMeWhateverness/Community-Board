@@ -71,7 +71,7 @@ export default function PostsPage() {
         </Row>
       </Col >
     </Row >
-    <Row className="mt-1 mb-n3">
+    <Row className="mt-1 mb-n3 board">
       {posts
         // filter by the chosen category
         .filter(x => categoryValue === 'All' || String(x.categoryID) === categoryValue)

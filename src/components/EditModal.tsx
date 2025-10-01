@@ -1,6 +1,6 @@
 import { Modal, Form, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import type Post from "../../interfaces/Post";
+import type Post from "../interfaces/Post";
 
 
 export default function EditModal({

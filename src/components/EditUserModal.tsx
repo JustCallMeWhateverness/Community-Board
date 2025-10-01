@@ -1,6 +1,6 @@
 import { Modal, Form, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import type User from "../../interfaces/User";
+import type User from "../interfaces/User";
 
 
 export default function EditUserModal({

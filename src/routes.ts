@@ -7,7 +7,7 @@ import NotFoundPage from './pages/NotFoundPage.tsx';
 
 import PostDetailsPage from './pages/PostDetailsPage.tsx';
 import PostsPage from './pages/PostsPage.tsx';
-import UserPage from './accountPage/UserPage.tsx';
+import UserPage from './pages/UserPage.tsx';
 import AccountPage from './accountPage/AccountRoute.tsx';
 
 export default [

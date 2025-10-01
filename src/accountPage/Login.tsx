@@ -36,12 +36,6 @@ export default function Login() {
   }
   return (
     <>
-      <Row>
-        <Col>
-          <h2 className="text-primary">Log in</h2>
-        </Col>
-      </Row>
-
       {/* Login Form */}
       <Form onSubmit={handleLogin}>
         <Form.Group>

@@ -1,9 +1,8 @@
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Col } from "react-bootstrap";
 import { useState, useEffect } from 'react';
 import { useUser } from '../hooks/UserContext';
 import Login from "./Login";
 import Register from "./Register";
-import UserPage from "./UserPage";
 import { useNavigate } from "react-router-dom";
 
 export default function AccountModal({
@@ -24,16 +23,34 @@ export default function AccountModal({
       navigate("/user");
     }
   }, [user]);
+
   if (loading) return <p>Loading...</p>;
 
+  const handleClose = () => {
+    if (showLogin || showRegister) {
+      // If user is on login/register, go back to choice screen
+      setShowLogin(false);
+      setShowRegister(false);
+    } else {
+      // Otherwise close modal fully
+      onHide();
+    }
+  };
+
+  const getTitle = () => {
+    if (showLogin) return "Log In";
+    if (showRegister) return "Register";
+    return "Log in or Sign up!";
+  };
+
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Log in or Sign up! </Modal.Title>
+        <Modal.Title>{getTitle()}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {!user && (
-          <div>
+          <Col>
             {!showLogin && !showRegister && (
               <>
                 <Button onClick={() => setShowLogin(true)}>Log In</Button>
@@ -45,7 +62,7 @@ export default function AccountModal({
 
             {showLogin && <Login />}
             {showRegister && <Register />}
-          </div>
+          </Col>
         )}
       </Modal.Body>
     </Modal>

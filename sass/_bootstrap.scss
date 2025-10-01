@@ -4,18 +4,67 @@ $font-size-base: 1.1rem;
 $line-height-base: 1.4;
 $navbar-dark-color: rgba(white, .8) !default;
 $navbar-dark-hover-color: rgba(white, .9) !default;
-$primary: rgb(14, 108, 21);
+$primary: #2b3842;
 $enable-negative-margins: true;
 
 // Import bootstrap
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
 // Override some Bootstrap defaults
+
+main {
+  position: relative;
+  min-height: 100vh;
+
+  /* Rainy day gradient */
+  background: linear-gradient(to bottom,
+      #b7bdc4 0%,
+      /* light gray-blue sky */
+      #838c92 50%,
+      /* medium gray */
+      #2b3842 100%
+      /* deeper gray at bottom */
+    );
+}
+
 .navbar-brand {
   font-family: 'Chewy';
   font-size: 30px;
+
 }
 
 .container {
-  max-width: 970px;
+  max-width: 1270px;
+}
+
+.board {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem;
+
+  background-color: #704b2b;
+
+  background-image:
+    repeating-linear-gradient(25deg,
+      rgba(0, 0, 0, 0.15) 0px,
+      rgba(0, 0, 0, 0.15) 2px,
+      transparent 2px,
+      transparent 6px),
+    repeating-linear-gradient(-25deg,
+      rgba(255, 255, 255, 0.06) 0px,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px,
+      transparent 4px);
+
+  background-size: 60px 60px, 40px 40px;
+  background-blend-mode: multiply;
+
+  border: 24px solid #3e2c1a;
+  border-radius: 0px;
+
+  box-shadow:
+    inset -4px 0 8px rgba(0, 0, 0, 0.4),
+    inset 4px 0 8px rgba(0, 0, 0, 0.4),
+    0 0 0 6px #2a1d11,
+    0 12px 24px rgba(0, 0, 0, 0.7);
 }

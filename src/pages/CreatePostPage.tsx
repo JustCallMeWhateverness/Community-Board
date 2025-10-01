@@ -28,6 +28,10 @@ export default function CreatePostPage() {
 
   function setProperty(event: React.ChangeEvent) {
     let { name, value } = event.target as HTMLInputElement;
+    if (name !== 'categoryID') {
+      // Capitalize first letter
+      value = value.charAt(0).toUpperCase() + value.slice(1);
+    }
     setPost({
       ...post,
       [name]: name === 'categoryID' ? Number(value) : value
@@ -50,7 +54,6 @@ export default function CreatePostPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    // navigate to
     navigate('/');
   }
 
@@ -58,17 +61,17 @@ export default function CreatePostPage() {
 
     <Row>
       <Col>
-        <h2 className="text-primary">Create Post</h2>
+        <h2 className="text">Create Post</h2>
       </Col>
     </Row>
 
-    <Row>
+    <Row >
       <Col md={6}>
         <p> Start creating you own post for the Community board!</p>
       </Col>
       <Col md={6}>
       </Col>
-      <Form onSubmit={sendForm}>
+      <Form onSubmit={sendForm} className=" bg-light p-2">
         <Form.Group>
           <Form.Label className="d-block">
             <p>Title:</p>
@@ -77,13 +80,13 @@ export default function CreatePostPage() {
               type="text" name="title" placeholder="Title" />
           </Form.Label>
           <Form.Label className="d-block">
-            <p>Overview:</p>
+            <hr /> <p>Overview:</p>
             <Form.Control required
               onChange={setProperty}
               type="text" name="overview" placeholder="Overview" />
           </Form.Label>
           <Form.Label className="d-block">
-            <p>Description:</p>
+            <hr /><p>Description:</p>
             <Form.Control required
               onChange={setProperty}
               type="text" name="description" placeholder="Description" />
@@ -91,7 +94,7 @@ export default function CreatePostPage() {
         </Form.Group>
         <Form.Group>
           <Form.Label>
-            <p>Category</p>
+            <hr /><p>Category:</p>
             <Form.Select required
               onChange={setProperty}
               name="categoryID" defaultValue="">

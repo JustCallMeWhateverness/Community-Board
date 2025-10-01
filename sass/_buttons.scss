@@ -7,22 +7,24 @@
   }
 
   button {
-    position: absolute;
+
     bottom: 1px;
     width: calc(100% - 1.2rem);
+    transition: transform 0.5s ease;
+    position: relative;
   }
 }
 
 // use green color when hovering light buttons
 .btn-light:hover {
-  background-color: #0c5c12;
+  background-color: #5f0b79;
   color: white;
 }
 
 // simulate hover color on button when hovering card
 // (since the whole card is clickable)
 .card:hover .btn-primary {
-  background-color: #0c5c12;
+  background-color: #510768;
 }
 
 // Form-switch make bigger + witdh of text overlay

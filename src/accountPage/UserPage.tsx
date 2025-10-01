@@ -2,7 +2,6 @@ import { Row, Col, Button, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks/UserContext';
 import type Post from '../interfaces/Post';
-import PostCard from '../parts/PostCard';
 import { useEffect, useState } from "react";
 import EditModal from "./UserPage/EditModal";
 import EditUserModal from "./UserPage/EditUserModal";
@@ -132,7 +131,7 @@ export default function UserPage() {
         <Col>
           <h2 className="text-primary">User Page</h2>
 
-          <Col className="border p-4 rounded bg-light">
+          <Col className="border p-4 bg-light">
             <h3>{user.username}</h3>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Role: </strong>{user.role}</p>
@@ -155,7 +154,7 @@ export default function UserPage() {
           ) : (
             <ul className="list-unstyled ">
               {posts.map((post) => (
-                <li key={post.id} className="border p-3 rounded bg-light mb-3">
+                <li key={post.id} className="border p-3 bg-light mb-3">
                   <strong>{post.title}</strong>, {post.overview}<hr />
                   <Button className="ms-2 btn btn-primary btn-sm" onClick={() => navigate('/posts/' + post.slug)}>Details</Button>
                   <Button className="ms-2 btn btn-secondary btn-sm" onClick={() => handleEdit(post)}>Edit</Button>

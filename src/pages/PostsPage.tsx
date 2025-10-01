@@ -51,8 +51,8 @@ export default function PostsPage() {
     </Row>
     <Row>
       <Col className="px-4 pt-1 pb-4">
-        <Row className="bg-primary-subtle pt-3 rounded">
-          <Col md="4">
+        <Row className=" pt-3 bg-secondary-subtle">
+          <Col md="5" >
             <Select
               label="Category"
               value={categoryChoice}
@@ -60,7 +60,7 @@ export default function PostsPage() {
               options={categories}
             />
           </Col>
-          <Col md="4">
+          <Col md="5">
             <Select
               label="Sort by"
               value={sortChoice}
@@ -71,14 +71,14 @@ export default function PostsPage() {
         </Row>
       </Col >
     </Row >
-    <Row className="mt-1 mb-n3 board">
+    <Row className="mt-1 mb-3 board">
       {posts
         // filter by the chosen category
         .filter(x => categoryValue === 'All' || String(x.categoryID) === categoryValue)
         // sort by the chosen choice for sorting
         .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * sortOrder)
         // map to product cards
-        .map(post => <Col xs={12} lg={6} key={post.id}>
+        .map(post => <Col xs={12} md={6} lg={4} key={post.id}>
           <PostCard {...post} />
         </Col>)
       }

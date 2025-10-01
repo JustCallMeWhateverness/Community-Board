@@ -15,20 +15,6 @@
   }
 }
 
-button:active {
-  animation: spin 2s linear;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg) translateX(0);
-  }
-
-  to {
-    transform: rotate(360deg)translateX(-500px);
-  }
-}
-
 // use green color when hovering light buttons
 .btn-light:hover {
   background-color: #5f0b79;

@@ -51,7 +51,7 @@ export default function PostDetailsPage() {
     </Row>
     <Row className="text-center">
       <Col className="px-4 pb-4">
-        <Row className="p-3 bg-primary-subtle rounded">
+        <Row className="p-3 bg-light">
           <Col xs={12} className="mb-2">
             <strong className="d-block">Description:</strong>
             <span

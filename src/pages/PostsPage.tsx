@@ -37,7 +37,7 @@ export default function PostsPage() {
     || sortOptions[0]; // fallback to first option
 
   const { key: sortKey, order: sortOrder } = foundSort;
-  const [showDate, setShowDate] = useState(true);
+  const [showDate, setShowDate] = useState(false);
 
 
   return <>

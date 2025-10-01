@@ -1,10 +1,11 @@
 import { useLoaderData } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 import { useStateContext } from '../utils/useStateObject';
 import Select from '../parts/Select';
 import PostCard from '../parts/PostCard';
 import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
 import { getHelpers } from '../utils/postPageHelpers';
+import { useState } from 'react';
 
 PostsPage.route = {
   path: '/',
@@ -36,6 +37,7 @@ export default function PostsPage() {
     || sortOptions[0]; // fallback to first option
 
   const { key: sortKey, order: sortOrder } = foundSort;
+  const [showDate, setShowDate] = useState(true);
 
 
   return <>
@@ -68,6 +70,14 @@ export default function PostsPage() {
               options={sortDescriptions.map(desc => ({ label: desc, value: desc }))}
             />
           </Col>
+          <Col md="2" className="align-items-end d-flex">
+            <Form.Check
+              type="checkbox"
+              label="Show Date"
+              checked={showDate}
+              onChange={(e) => setShowDate(e.target.checked)}
+            />
+          </Col>
         </Row>
       </Col >
     </Row >
@@ -79,7 +89,7 @@ export default function PostsPage() {
         .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * sortOrder)
         // map to product cards
         .map(post => <Col xs={12} md={6} lg={4} key={post.id}>
-          <PostCard {...post} />
+          <PostCard {...post} showDate={showDate} />
         </Col>)
       }
     </Row>

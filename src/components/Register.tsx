@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+export default function Register({ switchToLogin }: { switchToLogin: () => void }) {
 
   const navigate = useNavigate();
   const [signupData, setSignupData] = useState({
@@ -26,8 +26,7 @@ export default function Register() {
     });
 
     if (response.ok) {
-      alert("Signup successful! You can now log in.");
-      navigate("/login");
+      switchToLogin();
     } else {
       alert("Signup failed.");
     }

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Account from "./AccountModal";
+import Account from "../components/AccountModal";
 
 AccountRoute.route = {
   path: "/account",

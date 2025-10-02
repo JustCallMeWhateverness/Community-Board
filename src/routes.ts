@@ -8,7 +8,8 @@ import NotFoundPage from './pages/NotFoundPage.tsx';
 import PostDetailsPage from './pages/PostDetailsPage.tsx';
 import PostsPage from './pages/PostsPage.tsx';
 import UserPage from './pages/UserPage.tsx';
-import AccountPage from './accountPage/AccountRoute.tsx';
+import AccountRoute from './routes/AccountRoute.tsx';
+import AdminPage from './pages/AdminPage.tsx'
 
 export default [
   CreatePostPage,
@@ -16,8 +17,8 @@ export default [
   PostDetailsPage,
   PostsPage,
   UserPage,
-  AccountPage
-
+  AccountRoute,
+  AdminPage
 ]
   // map the route property of each page component to a Route
   .map(x => (({ element: createElement(x), ...x.route }) as Route))

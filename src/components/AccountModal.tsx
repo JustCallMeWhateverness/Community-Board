@@ -1,6 +1,6 @@
 import { Button, Modal, Col } from "react-bootstrap";
 import { useState, useEffect } from 'react';
-import { useUser } from '../hooks/UserContext';
+import { useUser } from '../context/UserContext';
 import Login from "./Login";
 import Register from "./Register";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,11 @@ export default function AccountModal({
   useEffect(() => {
     if (user) {
       onHide();
-      navigate("/user");
+      if (user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+      }
     }
   }, [user]);
 
@@ -61,7 +65,14 @@ export default function AccountModal({
             )}
 
             {showLogin && <Login />}
-            {showRegister && <Register />}
+            {showRegister && (
+              <Register
+                switchToLogin={() => {
+                  setShowRegister(false);
+                  setShowLogin(true);
+                }}
+              />
+            )}
           </Col>
         )}
       </Modal.Body>

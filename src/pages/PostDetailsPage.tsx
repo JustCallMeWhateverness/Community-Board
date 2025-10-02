@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import NotFoundPage from './NotFoundPage';
 import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
 import type User from '../interfaces/User.ts';
-import { useUser } from "../hooks/UserContext";
+import { useUser } from "../context/UserContext.tsx";
 
 PostDetailsPage.route = {
   path: '/posts/:slug',

@@ -1,5 +1,5 @@
 import { Row, Col } from "react-bootstrap";
-import { useUser } from "../hooks/UserContext";
+import { useUser } from "../context/UserContext";
 import { useUserPosts } from "../hooks/useUserPosts";
 import { useCategories } from "../hooks/useCategories";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ export default function UserPage() {
   const navigate = useNavigate();
 
   // Modal hooks
-  const deleteModal = useModal<Post>();
+  const deletePostModal = useModal<Post>();
   const editPostModal = useModal<Post>();
   const editUserModal = useModal<User>();
 
@@ -45,14 +45,14 @@ export default function UserPage() {
   function handleEditUser(user: User) { editUserModal.open(user); }
 
   // Confirm delete
-  function confirmDelete(post: Post) { deleteModal.open(post); }
+  function confirmDeletePost(post: Post) { deletePostModal.open(post); }
 
-  async function handleDeleteConfirmed() {
-    if (!deleteModal.selectedItem) return;
-    const response = await fetch(`/api/posts/${deleteModal.selectedItem.id}`, { method: "DELETE" });
-    if (response.ok) setPosts(prev => prev.filter(p => p.id !== deleteModal.selectedItem!.id));
+  async function handleDeletePostConfirmed() {
+    if (!deletePostModal.selectedItem) return;
+    const response = await fetch(`/api/posts/${deletePostModal.selectedItem.id}`, { method: "DELETE" });
+    if (response.ok) setPosts(prev => prev.filter(p => p.id !== deletePostModal.selectedItem!.id));
     else alert("Failed to delete post.");
-    deleteModal.close();
+    deletePostModal.close();
   }
 
   async function handleSave(updatedPost: Post) {
@@ -80,20 +80,23 @@ export default function UserPage() {
           <h2 className="text-primary">User Page</h2>
 
           <Row className="text-center">
-            <UserInfoCard user={user} handleEditUser={handleEditUser} handleLogout={handleLogout} />
+            <UserInfoCard
+              user={user}
+              handleEditUser={handleEditUser}
+              handleLogout={handleLogout} />
           </Row>
         </Col>
       </Row>
-      <UserPostsSection posts={posts} onEdit={handleEdit} onDelete={confirmDelete} />
+      <UserPostsSection posts={posts} onEdit={handleEdit} onDelete={confirmDeletePost} />
 
       <UserComments user={user} />
 
       <ConfirmModal
-        show={deleteModal.show}
+        show={deletePostModal.show}
         title="Confirm Delete"
-        message={`Are you sure you want to delete ${deleteModal.selectedItem?.title}?`}
-        onConfirm={handleDeleteConfirmed}
-        onCancel={deleteModal.close}
+        message={`Are you sure you want to delete ${deletePostModal.selectedItem?.title}?`}
+        onConfirm={handleDeletePostConfirmed}
+        onCancel={deletePostModal.close}
       />
 
       {editPostModal.selectedItem && (

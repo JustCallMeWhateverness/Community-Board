@@ -4,6 +4,7 @@ import { useUser } from "../context/UserContext.tsx";
 import NotFoundPage from './NotFoundPage';
 import postsCategoryAndUserLoader from '../utils/postsCategoryAndUserLoader.tsx';
 import type PostDetailsViewRow from '../interfaces/PostDetailsView.ts';
+import CommentSection from '../components/CommentSection.tsx';
 
 PostDetailsPage.route = {
   path: '/posts/:slug',
@@ -71,6 +72,8 @@ export default function PostDetailsPage() {
           </Link>
         </Col>
       </Row>
+      {/* Comment section */}
+      <CommentSection postID={post.postID} />
     </article>
   );
 }

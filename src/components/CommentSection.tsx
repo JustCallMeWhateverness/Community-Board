@@ -17,7 +17,7 @@ export default function CommentSection({ postID }: Props) {
     setLoading(true);
     const res = await fetch(`/api/commentdetailsview?postID=${postID}`);
     const data = await res.json();
-    setComments(Array.isArray(data) ? data : []);
+    setComments(Array.isArray(data) ? data.filter(c => c.postID === postID) : []);
     setLoading(false);
   };
 

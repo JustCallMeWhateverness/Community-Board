@@ -5,10 +5,12 @@ import { useUser } from "../context/UserContext";
 import { useModal } from "../hooks/useModal";
 import type User from "../interfaces/User";
 import type Post from "../interfaces/Post";
+import type UserComment from "../interfaces/UserComment";
 
 import ConfirmModal from "../components/ConfirmModal";
 import EditUserModal from "../components/EditUserModal";
 import EditModal from "../components/EditModal";
+import EditCommentModal from "../components/EditCommentModal";
 
 AdminPage.route = { path: "/admin" };
 
@@ -16,6 +18,7 @@ export default function AdminPage() {
   const { user } = useUser();
   const [users, setUsers] = useState<User[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
+  const [comments, setComments] = useState<UserComment[]>([]);
   const { setUser } = useUser();
   const navigate = useNavigate();
 
@@ -23,11 +26,14 @@ export default function AdminPage() {
   const deletePostModal = useModal<Post>();
   const editUserModal = useModal<User>();
   const editPostModal = useModal<Post>();
+  const deleteCommentModal = useModal<UserComment>();
+  const editCommentModal = useModal<UserComment>();
 
   useEffect(() => {
     if (user?.role === "admin") {
       fetch("/api/users").then(res => res.json()).then(setUsers);
       fetch("/api/posts").then(res => res.json()).then(setPosts);
+      fetch("/api/comments").then(res => res.json()).then(setComments);
     }
   }, [user]);
 
@@ -60,6 +66,18 @@ export default function AdminPage() {
     deletePostModal.close();
   }
 
+  // Delete comment
+  async function handleDeleteCommentConfirmed() {
+    if (!deleteCommentModal.selectedItem) return;
+    const response = await fetch(`/api/comments/${deleteCommentModal.selectedItem.id}`, { method: "DELETE" });
+    if (response.ok) {
+      setComments(prev => prev.filter(c => c.id !== deleteCommentModal.selectedItem!.id));
+    } else {
+      alert("Failed to delete comment.");
+    }
+    deleteCommentModal.close();
+  }
+
   // Save user edits
   async function handleSaveUser(updatedUser: User) {
     const response = await fetch(`/api/users/${updatedUser.id}`, {
@@ -86,6 +104,20 @@ export default function AdminPage() {
     editPostModal.close();
   }
 
+  //Save comment edits
+  async function handleSaveComment(updatedComment: UserComment) {
+    const response = await fetch(`/api/comments/${updatedComment.id}`, {
+      method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updatedComment)
+    });
+    if (response.ok) {
+      setComments(prev => prev.map(c => c.id === updatedComment.id ? updatedComment : c));
+    } else {
+      alert("Failed to update comment.");
+    }
+    editCommentModal.close();
+  }
+
+  // Logout
   async function handleLogout() {
     const response = await fetch("/api/login", { method: "DELETE", credentials: "include" });
     if (response.ok) {
@@ -132,12 +164,13 @@ export default function AdminPage() {
         <Table bordered hover>
           <thead>
             <tr>
-              <th>Title</th><th>User</th><th>Category</th><th>Actions</th>
+              <th>Id</th><th>Title</th><th>User</th><th>Category</th><th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {posts.map(p => (
               <tr key={p.id}>
+                <td>{p.id}</td>
                 <td>{p.title}</td>
                 <td>{p.userID}</td>
                 <td>{p.categoryID}</td>
@@ -149,7 +182,29 @@ export default function AdminPage() {
             ))}
           </tbody>
         </Table>
+        <h3>All Comments</h3>
+        <Table bordered hover>
+          <thead>
+            <tr>
+              <th>Post ID</th><th>User ID</th><th>Comment</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comments.map(c => (
+              <tr key={c.id}>
+                <td>{c.postID}</td>
+                <td>{c.userID}</td>
+                <td>{c.text}</td>
+                <td><Button size="sm" variant="secondary" onClick={() => editCommentModal.open(c)}>Edit</Button>
+                  <Button size="sm" variant="danger" onClick={() => deleteCommentModal.open(c)}>Delete</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </Col>
+
+
 
       {/* Modals */}
       <ConfirmModal
@@ -165,6 +220,13 @@ export default function AdminPage() {
         message={`Are you sure you want to delete ${deletePostModal.selectedItem?.title}?`}
         onConfirm={handleDeletePostConfirmed}
         onCancel={deletePostModal.close}
+      />
+      <ConfirmModal
+        show={deleteCommentModal.show}
+        title="Confirm Delete Comment"
+        message={`Are you sure you want to delete this comment?`}
+        onConfirm={handleDeleteCommentConfirmed}
+        onCancel={deleteCommentModal.close}
       />
       {editUserModal.selectedItem && (
         <EditUserModal
@@ -183,6 +245,15 @@ export default function AdminPage() {
           onSave={handleSavePost}
         />
       )}
+      {editCommentModal.selectedItem && (
+        <EditCommentModal
+          show={editCommentModal.show}
+          onHide={editCommentModal.close}
+          comment={editCommentModal.selectedItem}
+          onSave={handleSaveComment}
+        />
+      )}
+
     </Row>
   );
 }

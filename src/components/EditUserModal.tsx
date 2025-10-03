@@ -26,7 +26,7 @@ export default function EditUserModal({
       setFormData({
         username: user.username,
         email: user.email,
-        password: user.password,
+        password: "", // Password is not pre-filled for security reasons
       });
     }
   }, [user]);
@@ -77,8 +77,7 @@ export default function EditUserModal({
             <Form.Label className="d-block">
               <p>Password:</p>
               <Form.Control
-                required
-                value={formData.password}
+                value={formData.password ?? ""}
                 onChange={handleChange}
                 type="text"
                 name="password"

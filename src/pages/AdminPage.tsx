@@ -9,7 +9,7 @@ import type UserComment from "../interfaces/UserComment";
 
 import ConfirmModal from "../components/ConfirmModal";
 import EditUserModal from "../components/EditUserModal";
-import EditModal from "../components/EditModal";
+import EditModal from "../components/EditPostModal";
 import EditCommentModal from "../components/EditCommentModal";
 
 AdminPage.route = { path: "/admin" };

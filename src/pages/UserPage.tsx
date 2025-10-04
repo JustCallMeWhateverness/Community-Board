@@ -5,15 +5,13 @@ import { useCategories } from "../hooks/useCategories";
 import { useUserComments } from "../hooks/useUserComments";
 import { useNavigate } from "react-router-dom";
 import type Post from "../interfaces/Post";
-import type User from "../interfaces/User";
 import type UserComment from "../interfaces/UserComment";
 
 import UserInfoCard from "../components/UserInfoCard";
 import UserPostsSection from "../components/UserPostsSection";
 import UserCommentsSection from "../components/UserCommentsSection";
 
-import EditModal from "../components/EditModal";
-import EditUserModal from "../components/EditUserModal";
+import EditModal from "../components/EditPostModal";
 import EditCommentModal from "../components/EditCommentModal";
 import ConfirmModal from "../components/ConfirmModal";
 import { useModal } from "../hooks/useModal";
@@ -30,7 +28,6 @@ export default function UserPage() {
   // Modal hooks
   const deletePostModal = useModal<Post>();
   const editPostModal = useModal<Post>();
-  const editUserModal = useModal<User>();
   const editCommentModal = useModal<UserComment>();
   const deleteCommentModal = useModal<UserComment>();
 
@@ -46,9 +43,6 @@ export default function UserPage() {
 
   // Edit post
   function handleEdit(post: Post) { editPostModal.open(post); }
-
-  // Edit user
-  function handleEditUser(user: User) { editUserModal.open(user); }
 
   // Confirm delete post
   function confirmDeletePost(post: Post) { deletePostModal.open(post); }
@@ -85,14 +79,6 @@ export default function UserPage() {
     editPostModal.close();
   }
 
-  async function handleSaveUser(updatedUser: User) {
-    const response = await fetch(`/api/users/${updatedUser.id}`, {
-      method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updatedUser)
-    });
-    if (response.ok) setUser(updatedUser);
-    else alert("Failed to update user information.");
-    editUserModal.close();
-  }
   async function handleSaveComment(updatedComment: UserComment) {
     const response = await fetch(`/api/comments/${updatedComment.id}`, {
       method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updatedComment)
@@ -114,7 +100,6 @@ export default function UserPage() {
           <Row className="text-center">
             <UserInfoCard
               user={user}
-              handleEditUser={handleEditUser}
               handleLogout={handleLogout} />
           </Row>
         </Col>
@@ -145,15 +130,6 @@ export default function UserPage() {
           post={editPostModal.selectedItem}
           categories={categories}
           onSave={handleSave}
-        />
-      )}
-
-      {editUserModal.selectedItem && (
-        <EditUserModal
-          show={editUserModal.show}
-          onHide={editUserModal.close}
-          user={editUserModal.selectedItem}
-          onSave={handleSaveUser}
         />
       )}
 

@@ -196,7 +196,7 @@ export default function AdminPage() {
                 <td>{c.userID}</td>
                 <td>{c.text}</td>
                 <td><Button size="sm" variant="secondary" onClick={() => editCommentModal.open(c)}>Edit</Button>
-                  <Button size="sm" variant="danger" onClick={() => deleteCommentModal.open(c)}>Delete</Button>
+                  <Button size="sm" variant="danger" className="ms-2" onClick={() => deleteCommentModal.open(c)}>Delete</Button>
                 </td>
               </tr>
             ))}

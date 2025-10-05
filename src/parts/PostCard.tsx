@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, Row, Col } from 'react-bootstrap';
 
 export default function PostCard(
-  { title, overview, date, slug }: Post
+  { title, overview, date, slug, showDate = true }: Post & { showDate?: boolean }
 ) {
   const navigate = useNavigate();
   return <Card
@@ -17,15 +17,15 @@ export default function PostCard(
         <Card.Text className="mb-0">
           <span className="ms-2">{overview}</span>
         </Card.Text>
-        <Card.Title></Card.Title>
-        <Card.Text className="mb-0">
-          <strong>Date created:</strong>
-          <span
-            className="d-block d-sm-inline ms-2"
-          >
-            {new Date(date).toLocaleDateString()}
-          </span>
-        </Card.Text>
+        {showDate && (
+          <Card.Text className="mb-0">
+            <strong>Date created:</strong>
+            <span className="d-block d-sm-inline ms-2">
+              {new Date(date).toLocaleDateString()}
+            </span>
+          </Card.Text>
+        )}
+
       </Col>
     </Card.Body>
   </Card >;

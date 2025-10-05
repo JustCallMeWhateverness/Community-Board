@@ -1,10 +1,13 @@
 import { useLoaderData } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
+import { useState } from 'react';
 import { useStateContext } from '../utils/useStateObject';
+import { getHelpers } from '../utils/postPageHelpers';
 import Select from '../parts/Select';
 import PostCard from '../parts/PostCard';
 import postsAndCategoryLoader from '../utils/postsAndCategoryLoader.tsx';
-import { getHelpers } from '../utils/postPageHelpers';
+
+
 
 PostsPage.route = {
   path: '/',
@@ -36,7 +39,9 @@ export default function PostsPage() {
     || sortOptions[0]; // fallback to first option
 
   const { key: sortKey, order: sortOrder } = foundSort;
+  const [showDate, setShowDate] = useState(false);
 
+  const [search, setSearch] = useState('');
 
   return <>
     <Row>
@@ -51,6 +56,7 @@ export default function PostsPage() {
     </Row>
     <Row>
       <Col className="px-4 pt-1 pb-4">
+
         <Row className=" pt-3 bg-secondary-subtle">
           <Col md="5" >
             <Select
@@ -68,18 +74,43 @@ export default function PostsPage() {
               options={sortDescriptions.map(desc => ({ label: desc, value: desc }))}
             />
           </Col>
+          <Col md="2" className="align-items-end d-flex">
+            <Form.Check
+              type="checkbox"
+              label="Show Date"
+              checked={showDate}
+              onChange={(e) => setShowDate(e.target.checked)}
+            />
+          </Col>
         </Row>
-      </Col >
+      </Col ><Row>
+        <Col md={6} className="mx-auto mb-3">
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Search posts..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+        </Col>
+      </Row>
     </Row >
     <Row className="mt-1 mb-3 board">
       {posts
         // filter by the chosen category
-        .filter(x => categoryValue === 'All' || String(x.categoryID) === categoryValue)
+        .filter(x =>
+          (categoryValue === 'All' || String(x.categoryID) === categoryValue) &&
+          (
+            !search ||
+            x.title.toLowerCase().includes(search.toLowerCase()) ||
+            x.overview.toLowerCase().includes(search.toLowerCase())
+          )
+        )
         // sort by the chosen choice for sorting
         .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * sortOrder)
         // map to product cards
         .map(post => <Col xs={12} md={6} lg={4} key={post.id}>
-          <PostCard {...post} />
+          <PostCard {...post} showDate={showDate} />
         </Col>)
       }
     </Row>

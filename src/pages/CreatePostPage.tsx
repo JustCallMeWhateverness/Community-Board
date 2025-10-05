@@ -3,7 +3,7 @@ import type Category from '../interfaces/Category';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import categoriesLoader from '../utils/categoriesLoader';
-import { useUser } from '../hooks/UserContext';
+import { useUser } from '../context/UserContext';
 
 
 CreatePostPage.route = {

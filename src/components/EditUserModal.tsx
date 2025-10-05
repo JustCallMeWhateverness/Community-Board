@@ -1,6 +1,6 @@
 import { Modal, Form, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import type User from "../../interfaces/User";
+import type User from "../interfaces/User";
 
 
 export default function EditUserModal({
@@ -19,6 +19,7 @@ export default function EditUserModal({
     email: "",
     password: "",
   });
+  const [showPasswordField, setShowPasswordField] = useState(false);
 
   // Pre-fill form when modal opens with the user data
   useEffect(() => {
@@ -26,8 +27,9 @@ export default function EditUserModal({
       setFormData({
         username: user.username,
         email: user.email,
-        password: user.password,
+        password: "", // Password is not pre-filled for security reasons
       });
+      setShowPasswordField(false);
     }
   }, [user]);
 
@@ -74,17 +76,31 @@ export default function EditUserModal({
                 placeholder="Email"
               />
             </Form.Label>
-            <Form.Label className="d-block">
-              <p>Password:</p>
-              <Form.Control
-                required
-                value={formData.password}
-                onChange={handleChange}
-                type="text"
-                name="password"
-                placeholder="Password"
-              />
-            </Form.Label>
+            {!showPasswordField && (
+              <Button
+                variant="secondary"
+                className="mb-2"
+                onClick={() => setShowPasswordField(true)}
+              >
+                Change Password
+              </Button>
+            )}
+            {showPasswordField && (
+              <Form.Label className="d-block">
+                <p>New Password:</p>
+                <Form.Control
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  type="password"
+                  name="password"
+                  placeholder="Enter new password"
+                />
+                <Form.Text className="text-muted">
+                  Enter a new password to change it.
+                </Form.Text>
+              </Form.Label>
+            )}
           </Form.Group>
 
           <Button type="submit" className="float-end">

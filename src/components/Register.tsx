@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+export default function Register({ switchToLogin }: { switchToLogin: () => void }) {
 
   const navigate = useNavigate();
   const [signupData, setSignupData] = useState({
@@ -26,47 +26,47 @@ export default function Register() {
     });
 
     if (response.ok) {
-      alert("Signup successful! You can now log in.");
-      navigate("/login");
+      switchToLogin();
     } else {
       alert("Signup failed.");
     }
   }
 
   return (
-    <Row>
-      <Col>
-        <h2 className="text-primary">Register</h2>
-        <Form onSubmit={handleSignup}>
-          <Form.Group>
-            <Form.Label>Username</Form.Label>
+    <>
+      <Form onSubmit={handleSignup}>
+        <Form.Group>
+          <Form.Label className="d-block">
+            <p>Username</p>
             <Form.Control required
               name="username"
               onChange={setProperty}
               placeholder="Enter username"
             />
-
-            <Form.Label>Email</Form.Label>
+          </Form.Label>
+          <Form.Label className="d-block">
+            <p>Email</p>
             <Form.Control required
               name="email"
               type="email"
               onChange={setProperty}
               placeholder="Enter email"
             />
-
-            <Form.Label>Password</Form.Label>
+          </Form.Label>
+          <Form.Label className="d-block">
+            <p>Password</p>
             <Form.Control required
               name="password"
               type="password"
               onChange={setProperty}
               placeholder="Enter password"
             />
-          </Form.Group>
-          <Button type="submit" className="mt-3">
-            Sign Up
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+          </Form.Label>
+        </Form.Group>
+        <Button type="submit" className="float end">
+          Sign Up
+        </Button>
+      </Form>
+    </>
   );
 }

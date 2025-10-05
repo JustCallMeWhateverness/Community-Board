@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../hooks/UserContext';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { useUser } from '../context/UserContext';
+import { Form, Button } from 'react-bootstrap';
 
 export default function Login() {
   const { setUser } = useUser();
@@ -10,10 +10,8 @@ export default function Login() {
     email: '',
     password: '',
   });
-  const navigate = useNavigate();
 
 
-  //Function set property for only log in form
   function setProperty(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target;
     setLoginData({ ...loginData, [name]: value });
@@ -29,19 +27,13 @@ export default function Login() {
     if (response.ok) {
       const data = await response.json();
       setUser(data);
-      navigate('/User');
     } else {
       alert('Login failed');
     }
   }
+
   return (
     <>
-      <Row>
-        <Col>
-          <h2 className="text-primary">Log in</h2>
-        </Col>
-      </Row>
-
       {/* Login Form */}
       <Form onSubmit={handleLogin}>
         <Form.Group>

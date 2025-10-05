@@ -29,6 +29,10 @@ export default function AdminPage() {
   const deleteCommentModal = useModal<UserComment>();
   const editCommentModal = useModal<UserComment>();
 
+  const [userSearch, setUserSearch] = useState('');
+  const [postSearch, setPostSearch] = useState('');
+  const [commentSearch, setCommentSearch] = useState('');
+
   useEffect(() => {
     if (user?.role === "admin") {
       fetch("/api/users").then(res => res.json()).then(setUsers);
@@ -141,7 +145,15 @@ export default function AdminPage() {
             <Button variant="danger" onClick={handleLogout}>Logout</Button>
           </Col>
         </Row>
+
         <h3>All Users</h3>
+        <input
+          type="search"
+          className="form-control mb-2"
+          placeholder="Search users..."
+          value={userSearch}
+          onChange={e => setUserSearch(e.target.value)}
+        />
         <Table bordered hover>
           <thead>
             <tr>
@@ -149,22 +161,37 @@ export default function AdminPage() {
             </tr>
           </thead>
           <tbody>
-            {users.map(u => (
-              <tr key={u.id}>
-                <td>{u.id}</td>
-                <td>{u.username}</td>
-                <td>{u.email}</td>
-                <td>{u.role}</td>
-                <td>
-                  <Button size="sm" variant="secondary" onClick={() => editUserModal.open(u)}>Edit</Button>
-                  <Button size="sm" variant="danger" className="ms-2" onClick={() => deleteUserModal.open(u)}>Delete</Button>
-                </td>
-              </tr>
-            ))}
+            {users
+              .filter(u =>
+                !userSearch ||
+                u.id.toString().includes(userSearch) ||
+                u.username.toLowerCase().includes(userSearch.toLowerCase()) ||
+                u.email.toLowerCase().includes(userSearch.toLowerCase()) ||
+                u.role.toLowerCase().includes(userSearch.toLowerCase())
+              )
+              .map(u => (
+                <tr key={u.id}>
+                  <td>{u.id}</td>
+                  <td>{u.username}</td>
+                  <td>{u.email}</td>
+                  <td>{u.role}</td>
+                  <td>
+                    <Button size="sm" variant="secondary" onClick={() => editUserModal.open(u)}>Edit</Button>
+                    <Button size="sm" variant="danger" className="ms-2" onClick={() => deleteUserModal.open(u)}>Delete</Button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
 
         <h3>All Posts</h3>
+        <input
+          type="search"
+          className="form-control mb-2"
+          placeholder="Search posts..."
+          value={postSearch}
+          onChange={e => setPostSearch(e.target.value)}
+        />
         <Table bordered hover>
           <thead>
             <tr>
@@ -172,21 +199,36 @@ export default function AdminPage() {
             </tr>
           </thead>
           <tbody>
-            {posts.map(p => (
-              <tr key={p.id}>
-                <td>{p.id}</td>
-                <td>{p.title}</td>
-                <td>{p.userID}</td>
-                <td>{p.categoryID}</td>
-                <td>
-                  <Button size="sm" variant="secondary" onClick={() => editPostModal.open(p)}>Edit</Button>
-                  <Button size="sm" variant="danger" className="ms-2" onClick={() => deletePostModal.open(p)}>Delete</Button>
-                </td>
-              </tr>
-            ))}
+            {posts
+              .filter(p =>
+                !postSearch ||
+                p.id.toString().includes(postSearch) ||
+                p.title.toLowerCase().includes(postSearch.toLowerCase()) ||
+                String(p.userID).includes(postSearch) ||
+                String(p.categoryID).includes(postSearch)
+              )
+              .map(p => (
+                <tr key={p.id}>
+                  <td>{p.id}</td>
+                  <td>{p.title}</td>
+                  <td>{p.userID}</td>
+                  <td>{p.categoryID}</td>
+                  <td>
+                    <Button size="sm" variant="secondary" onClick={() => editPostModal.open(p)}>Edit</Button>
+                    <Button size="sm" variant="danger" className="ms-2" onClick={() => deletePostModal.open(p)}>Delete</Button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
         <h3>All Comments</h3>
+        <input
+          type="search"
+          className="form-control mb-2"
+          placeholder="Search comments..."
+          value={commentSearch}
+          onChange={e => setCommentSearch(e.target.value)}
+        />
         <Table bordered hover>
           <thead>
             <tr>
@@ -194,16 +236,23 @@ export default function AdminPage() {
             </tr>
           </thead>
           <tbody>
-            {comments.map(c => (
-              <tr key={c.id}>
-                <td>{c.postID}</td>
-                <td>{c.userID}</td>
-                <td>{c.text}</td>
-                <td><Button size="sm" variant="secondary" onClick={() => editCommentModal.open(c)}>Edit</Button>
-                  <Button size="sm" variant="danger" className="ms-2" onClick={() => deleteCommentModal.open(c)}>Delete</Button>
-                </td>
-              </tr>
-            ))}
+            {comments
+              .filter(c =>
+                !commentSearch ||
+                c.text.toLowerCase().includes(commentSearch.toLowerCase()) ||
+                String(c.userID).includes(commentSearch) ||
+                String(c.postID).includes(commentSearch)
+              )
+              .map(c => (
+                <tr key={c.id}>
+                  <td>{c.postID}</td>
+                  <td>{c.userID}</td>
+                  <td>{c.text}</td>
+                  <td><Button size="sm" variant="secondary" onClick={() => editCommentModal.open(c)}>Edit</Button>
+                    <Button size="sm" variant="danger" className="ms-2" onClick={() => deleteCommentModal.open(c)}>Delete</Button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
       </Col>

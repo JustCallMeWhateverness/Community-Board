@@ -41,6 +41,7 @@ export default function PostsPage() {
   const { key: sortKey, order: sortOrder } = foundSort;
   const [showDate, setShowDate] = useState(false);
 
+  const [search, setSearch] = useState('');
 
   return <>
     <Row>
@@ -55,6 +56,7 @@ export default function PostsPage() {
     </Row>
     <Row>
       <Col className="px-4 pt-1 pb-4">
+
         <Row className=" pt-3 bg-secondary-subtle">
           <Col md="5" >
             <Select
@@ -81,12 +83,29 @@ export default function PostsPage() {
             />
           </Col>
         </Row>
-      </Col >
+      </Col ><Row>
+        <Col md={6} className="mx-auto mb-3">
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Search posts..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+        </Col>
+      </Row>
     </Row >
     <Row className="mt-1 mb-3 board">
       {posts
         // filter by the chosen category
-        .filter(x => categoryValue === 'All' || String(x.categoryID) === categoryValue)
+        .filter(x =>
+          (categoryValue === 'All' || String(x.categoryID) === categoryValue) &&
+          (
+            !search ||
+            x.title.toLowerCase().includes(search.toLowerCase()) ||
+            x.overview.toLowerCase().includes(search.toLowerCase())
+          )
+        )
         // sort by the chosen choice for sorting
         .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1) * sortOrder)
         // map to product cards

@@ -89,34 +89,35 @@ export default function CommentSection({ postID }: Props) {
                   </span>
                 </Col>
                 <Col className="fs-6">{comment.text}</Col>
-                {comment.updatedAt && (
-                  <span className="text-secondary small fst-italic mt-2 d-block">
-                    edited {new Date(comment.updatedAt).toLocaleDateString()}
-                  </span>
-                )}
-
-
+                <Col className="d-flex float-end">
+                  {comment.updatedAt && (
+                    <span className="text-secondary small fst-italic mt-2 d-block">
+                      edited {new Date(comment.updatedAt).toLocaleDateString()}
+                    </span>
+                  )}
+                  {user && comment.authorID === user.id && (
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className=" py-0 px-1 btn-sm mt-2 ms-3"
+                      onClick={() => {
+                        const userComment: UserComment = {
+                          id: comment.commentID,
+                          postID: comment.postID,
+                          userID: comment.authorID,
+                          text: comment.text,
+                          createdAt: comment.createdAt,
+                          updatedAt: comment.updatedAt,
+                        };
+                        editCommentModal.open(userComment);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  )}
+                </Col>
               </Col>
-              <Col>{user && comment.authorID === user.id && (
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  className="py-0 px-2 ms-2 float-end"
-                  onClick={() => {
-                    const userComment: UserComment = {
-                      id: comment.commentID,
-                      postID: comment.postID,
-                      userID: comment.authorID,
-                      text: comment.text,
-                      createdAt: comment.createdAt,
-                      updatedAt: comment.updatedAt,
-                    };
-                    editCommentModal.open(userComment);
-                  }}
-                >
-                  Edit
-                </Button>
-              )}</Col>
+
             </Row>
 
           ))

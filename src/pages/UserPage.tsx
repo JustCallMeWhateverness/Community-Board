@@ -80,11 +80,17 @@ export default function UserPage() {
   }
 
   async function handleSaveComment(updatedComment: UserComment) {
+    const payload = {
+      ...updatedComment,
+      updatedAt: new Date().toISOString().slice(0, 10),
+    };
     const response = await fetch(`/api/comments/${updatedComment.id}`, {
-      method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updatedComment)
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
     });
     if (response.ok) {
-      setComments(prev => prev.map(c => c.id === updatedComment.id ? updatedComment : c));
+      setComments(prev => prev.map(c => c.id === updatedComment.id ? { ...updatedComment, updatedAt: payload.updatedAt } : c));
     } else {
       alert("Failed to update comment.");
     }

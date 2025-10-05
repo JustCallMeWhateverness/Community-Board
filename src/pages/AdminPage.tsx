@@ -34,6 +34,7 @@ export default function AdminPage() {
   const [userSearch, setUserSearch] = useState('');
   const [postSearch, setPostSearch] = useState('');
   const [commentSearch, setCommentSearch] = useState('');
+  const [userFilter, setUserFilter] = useState('');
 
   useEffect(() => {
     if (user?.role === "admin") {
@@ -147,8 +148,18 @@ export default function AdminPage() {
             <Button variant="danger" onClick={handleLogout}>Logout</Button>
           </Col>
         </Row>
-
-        <h3>All Users</h3>
+        <select
+          className="form-select mb-3"
+          value={userFilter}
+          onChange={e => setUserFilter(e.target.value)}
+        >
+          <option value="">All users</option>
+          {users.map(u => (
+            <option key={u.id} value={u.id}>
+              {u.username} ({u.id})
+            </option>
+          ))}
+        </select>
         <input
           type="search"
           className="form-control mb-2"
@@ -165,11 +176,14 @@ export default function AdminPage() {
           <tbody>
             {users
               .filter(u =>
-                !userSearch ||
-                u.id.toString().includes(userSearch) ||
-                u.username.toLowerCase().includes(userSearch.toLowerCase()) ||
-                u.email.toLowerCase().includes(userSearch.toLowerCase()) ||
-                u.role.toLowerCase().includes(userSearch.toLowerCase())
+                (!userFilter || String(u.id) === userFilter) &&
+                (
+                  !userSearch ||
+                  u.id.toString().includes(userSearch) ||
+                  u.username.toLowerCase().includes(userSearch.toLowerCase()) ||
+                  u.email.toLowerCase().includes(userSearch.toLowerCase()) ||
+                  u.role.toLowerCase().includes(userSearch.toLowerCase())
+                )
               )
               .map(u => (
                 <tr key={u.id}>
@@ -203,11 +217,14 @@ export default function AdminPage() {
           <tbody>
             {posts
               .filter(p =>
-                !postSearch ||
-                p.id.toString().includes(postSearch) ||
-                p.title.toLowerCase().includes(postSearch.toLowerCase()) ||
-                String(p.userID).includes(postSearch) ||
-                String(p.categoryID).includes(postSearch)
+                (!userFilter || String(p.userID) === userFilter) &&
+                (
+                  !postSearch ||
+                  p.id.toString().includes(postSearch) ||
+                  p.title.toLowerCase().includes(postSearch.toLowerCase()) ||
+                  String(p.userID).includes(postSearch) ||
+                  String(p.categoryID).includes(postSearch)
+                )
               )
               .map(p => (
                 <tr key={p.id}>
@@ -221,6 +238,22 @@ export default function AdminPage() {
                   </td>
                 </tr>
               ))}
+            {posts.filter(p =>
+              (!userFilter || String(p.userID) === userFilter) &&
+              (
+                !postSearch ||
+                p.id.toString().includes(postSearch) ||
+                p.title.toLowerCase().includes(postSearch.toLowerCase()) ||
+                String(p.userID).includes(postSearch) ||
+                String(p.categoryID).includes(postSearch)
+              )
+            ).length === 0 && (
+                <tr>
+                  <td colSpan={5} className="text-center text-secondary">
+                    No posts for this user.
+                  </td>
+                </tr>
+              )}
           </tbody>
         </Table>
         <h3>All Comments</h3>
@@ -240,10 +273,13 @@ export default function AdminPage() {
           <tbody>
             {comments
               .filter(c =>
-                !commentSearch ||
-                c.text.toLowerCase().includes(commentSearch.toLowerCase()) ||
-                String(c.userID).includes(commentSearch) ||
-                String(c.postID).includes(commentSearch)
+                (!userFilter || String(c.userID) === userFilter) &&
+                (
+                  !commentSearch ||
+                  c.text.toLowerCase().includes(commentSearch.toLowerCase()) ||
+                  String(c.userID).includes(commentSearch) ||
+                  String(c.postID).includes(commentSearch)
+                )
               )
               .map(c => (
                 <tr key={c.id}>
@@ -255,6 +291,21 @@ export default function AdminPage() {
                   </td>
                 </tr>
               ))}
+            {comments.filter(c =>
+              (!userFilter || String(c.userID) === userFilter) &&
+              (
+                !commentSearch ||
+                c.text.toLowerCase().includes(commentSearch.toLowerCase()) ||
+                String(c.userID).includes(commentSearch) ||
+                String(c.postID).includes(commentSearch)
+              )
+            ).length === 0 && (
+                <tr>
+                  <td colSpan={4} className="text-center text-secondary">
+                    No comments for this user.
+                  </td>
+                </tr>
+              )}
           </tbody>
         </Table>
       </Col>

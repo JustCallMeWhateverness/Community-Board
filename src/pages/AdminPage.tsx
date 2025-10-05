@@ -3,6 +3,7 @@ import { Row, Col, Table, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { useModal } from "../hooks/useModal";
+import { useCategories } from "../hooks/useCategories";
 import type User from "../interfaces/User";
 import type Post from "../interfaces/Post";
 import type UserComment from "../interfaces/UserComment";
@@ -21,6 +22,7 @@ export default function AdminPage() {
   const [comments, setComments] = useState<UserComment[]>([]);
   const { setUser } = useUser();
   const navigate = useNavigate();
+  const categories = useCategories();
 
   const deleteUserModal = useModal<User>();
   const deletePostModal = useModal<Post>();
@@ -294,7 +296,7 @@ export default function AdminPage() {
           show={editPostModal.show}
           onHide={editPostModal.close}
           post={editPostModal.selectedItem}
-          categories={[]}
+          categories={categories}
           onSave={handleSavePost}
         />
       )}

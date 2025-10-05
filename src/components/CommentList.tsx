@@ -8,7 +8,7 @@ interface Props {
   handleDelete: (comment: UserComment) => void;
 }
 export default function CommentList({ comments, handleEdit, handleDelete }: Props) {
-  const navigate = useNavigate();
+
   if (comments.length === 0) return <p>You haven't made any comments yet.</p>;
   return (
     <ul className="list-unstyled">
@@ -16,7 +16,6 @@ export default function CommentList({ comments, handleEdit, handleDelete }: Prop
         <li key={comment.id} className="border p-3 bg-light mb-3">
           <span>{comment.text}</span>
           <hr />
-          <Button className="btn btn-primary btn-sm" onClick={() => navigate(`/posts/${comment.postID}`)}>View Post</Button>
           <Button className="ms-2 btn btn-secondary btn-sm" onClick={() => handleEdit(comment)}>Edit</Button>
           <Button className="ms-2 btn btn-danger btn-sm" onClick={() => handleDelete(comment)}>Delete</Button>
         </li>

@@ -1,6 +1,5 @@
 import { Row, Col } from 'react-bootstrap';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
-import { useUser } from "../context/UserContext.tsx";
 import NotFoundPage from './NotFoundPage';
 import postsCategoryAndUserLoader from '../utils/postsCategoryAndUserLoader.tsx';
 import type PostDetailsViewRow from '../interfaces/PostDetailsView.ts';
@@ -15,7 +14,6 @@ PostDetailsPage.route = {
 export default function PostDetailsPage() {
   const { slug } = useParams();
   const { posts } = useLoaderData() as { posts: PostDetailsViewRow[] };
-  const { user } = useUser();
 
   // Find the post by slug
   const post = posts.find(p => p.slug === slug);

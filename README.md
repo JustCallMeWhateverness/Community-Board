@@ -41,6 +41,23 @@ Built with React and Bootstrap, it’s fast, clean, and works great on any devic
 - C# ASP.NET Core
 - SQLite
 
+## User Roles & Demo Login
+
+There are two user roles in Community Board:
+
+- **Admin:** Can edit and delete any post, comment, or user.
+- **User:** Can create, edit, and delete their own posts and comments.
+
+**Demo accounts for testing:**
+
+- **Admin:**  
+  Email: `Admin@Admin.com`  
+  Password: `admin`
+
+- **User:**  
+  Email: `User@User.com`  
+  Password: `user`
+
 ## Screenshots
 
 ### Front Page

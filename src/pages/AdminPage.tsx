@@ -170,7 +170,8 @@ export default function AdminPage() {
         <Table bordered hover>
           <thead>
             <tr>
-              <th>Id</th><th>Username</th><th>Email</th><th>Role</th><th>Actions</th>
+              <th>Id</th><th>Username</th><th className="d-none d-md-table-cell">Email</th>
+              <th className="d-none d-md-table-cell">Role</th><th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -189,8 +190,8 @@ export default function AdminPage() {
                 <tr key={u.id}>
                   <td>{u.id}</td>
                   <td>{u.username}</td>
-                  <td>{u.email}</td>
-                  <td>{u.role}</td>
+                  <td className="d-none d-md-table-cell">{u.email}</td>
+                  <td className="d-none d-md-table-cell">{u.role}</td>
                   <td>
                     <Button size="sm" variant="secondary" onClick={() => editUserModal.open(u)}>Edit</Button>
                     <Button size="sm" variant="danger" className="ms-2" onClick={() => deleteUserModal.open(u)}>Delete</Button>
@@ -211,7 +212,7 @@ export default function AdminPage() {
         <Table bordered hover>
           <thead>
             <tr>
-              <th>Id</th><th>Title</th><th>User</th><th>Category</th><th>Actions</th>
+              <th>Id</th><th>Title</th><th className="d-none d-md-table-cell">User</th><th className="d-none d-md-table-cell">Category</th><th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -230,8 +231,8 @@ export default function AdminPage() {
                 <tr key={p.id}>
                   <td>{p.id}</td>
                   <td>{p.title}</td>
-                  <td>{p.userID}</td>
-                  <td>{p.categoryID}</td>
+                  <td className="d-none d-md-table-cell">{p.userID}</td>
+                  <td className="d-none d-md-table-cell">{p.categoryID}</td>
                   <td>
                     <Button size="sm" variant="secondary" onClick={() => editPostModal.open(p)}>Edit</Button>
                     <Button size="sm" variant="danger" className="ms-2" onClick={() => deletePostModal.open(p)}>Delete</Button>
